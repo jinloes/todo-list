@@ -1,0 +1,25 @@
+zuul:
+  routes:
+    user:
+      path: /user/**
+      url: http://localhost:9090/uaa/user
+
+spring:
+  oauth2:
+    sso:
+      home:
+        secure: false
+        path: /,/**/*.html
+    client:
+        accessTokenUri: http://localhost:9090/uaa/oauth/token
+        userAuthorizationUri: http://localhost:9090/uaa/oauth/authorize
+        clientId: acme
+        clientSecret: acmesecret
+    resource:
+      userInfoUri: http://localhost:9090/uaa/user
+
+
+logging:
+  level:
+    org.springframework.security: DEBUG
+    org.springframework.web: DEBUG

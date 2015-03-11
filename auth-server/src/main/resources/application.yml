@@ -1,0 +1,12 @@
+server:
+  port: 9090
+  contextPath: /uaa
+security:
+  user:
+    name: user
+    password: password
+    role: USER
+
+logging:
+  level:
+    org.springframework.security: DEBUG
