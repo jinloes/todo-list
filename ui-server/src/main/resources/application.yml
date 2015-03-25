@@ -3,6 +3,9 @@ zuul:
     user:
       path: /user/**
       url: http://localhost:9090/uaa/user
+    todos:
+          path: /todos/**
+          url: http://localhost:9090/uaa/todos
 
 spring:
   oauth2:

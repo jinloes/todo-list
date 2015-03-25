@@ -32,7 +32,11 @@ dependencies {
     compile("org.springframework.boot:spring-boot-starter-actuator")
     compile("org.springframework.boot:spring-boot-starter-security")
     compile("org.springframework.boot:spring-boot-starter-freemarker")
+    compile("org.springframework.boot:spring-boot-starter-data-rest")
+    compile("org.springframework.boot:spring-boot-starter-data-mongodb")
     compile("org.springframework.security.oauth:spring-security-oauth2:2.0.6.RELEASE")
+    compile("joda-time:joda-time:2.7")
+    compile("com.fasterxml.jackson.datatype:jackson-datatype-joda")
     testCompile("junit:junit")
     testCompile("org.springframework.boot:spring-boot-starter-test")
 }
