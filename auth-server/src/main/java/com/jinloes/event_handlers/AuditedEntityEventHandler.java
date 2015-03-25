@@ -1,24 +1,29 @@
 package com.jinloes.event_handlers;
 
+import com.jinloes.data.service.api.UserService;
 import com.jinloes.model.AuditedEntity;
+import com.jinloes.model.User;
 
 import org.joda.time.DateTime;
 import org.springframework.data.rest.core.annotation.HandleBeforeCreate;
 import org.springframework.data.rest.core.event.AbstractRepositoryEventListener;
-import org.springframework.security.core.context.SecurityContextHolder;
 
 /**
  * Created by jinloes on 3/23/15.
  */
 public abstract class AuditedEntityEventHandler<T extends AuditedEntity>
         extends AbstractRepositoryEventListener {
+    private final UserService userService;
+
+    public AuditedEntityEventHandler(UserService userService) {
+        this.userService = userService;
+    }
 
     @HandleBeforeCreate(AuditedEntity.class)
     public void handleAuditedEntityCreate(T entity) {
-        //TODO(jinloes) figure out how to get user's id
-        SecurityContextHolder.getContext().getAuthentication();
+        User currentUser = userService.getCurrentUser();
         handleCreateObject(entity);
-        entity.setCreatedBy("123");
+        entity.setCreatedBy(currentUser.getId());
         entity.setCreatedDate(DateTime.now());
     }
 

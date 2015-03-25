@@ -10,6 +10,7 @@ import org.springframework.security.core.userdetails.UserDetails;
  */
 public class User extends AuditedEntity implements UserDetails {
     private String username;
+    private String password;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -18,7 +19,11 @@ public class User extends AuditedEntity implements UserDetails {
 
     @Override
     public String getPassword() {
-        return null;
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     @Override
