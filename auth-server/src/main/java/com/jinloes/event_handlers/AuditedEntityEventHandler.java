@@ -19,14 +19,14 @@ public abstract class AuditedEntityEventHandler<T extends AuditedEntity>
         this.userService = userService;
     }
 
-    @HandleBeforeCreate(AuditedEntity.class)
     public void handleAuditedEntityCreate(T entity) {
-        User currentUser = userService.getCurrentUser();
-        handleCreateObject(entity);
-        entity.setCreatedBy(currentUser.getId());
+        User currentUser = getCreator(entity);
+        entity.setCreatedBy(currentUser);
         entity.setCreatedDate(DateTime.now());
     }
 
-    protected abstract void handleCreateObject(T entity);
+    public User getCreator(T entity) {
+        return userService.getCurrentUser();
+    }
 }
 

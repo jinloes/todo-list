@@ -13,6 +13,10 @@ var app = angular.module('hello', ['ngRoute'])
                     templateUrl: 'todos.html',
                     controller: 'todos'
                 })
+                .when('/register', {
+                    templateUrl: 'register.html',
+                    controller: 'register'
+                })
                 .otherwise('/');
         })
         .controller('navigation', function ($rootScope, $scope, $http, $location, $route) {
@@ -47,6 +51,14 @@ var app = angular.module('hello', ['ngRoute'])
         })
         .controller('test', function ($scope, $http) {
             $scope.test = 'foo'
+        })
+        .controller('register', function ($scope, $http, $window) {
+            $scope.register = function () {
+                $http.post("http://localhost:8080/registration", $scope.registration)
+                    .success(function (data) {
+                        $window.location.href = 'http://localhost:8080/login';
+                    });
+            }
         })
         .controller('todos', function ($rootScope, $scope, $http) {
             $scope.createToDo = function () {

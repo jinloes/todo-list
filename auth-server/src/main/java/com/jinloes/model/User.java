@@ -2,15 +2,33 @@ package com.jinloes.model;
 
 import java.util.Collection;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 /**
- * Created by jinloes on 3/24/15.
+ * A user object.
  */
+@Document
 public class User extends AuditedEntity implements UserDetails {
     private String username;
     private String password;
+    private String email;
+
+    public User() {
+
+    }
+
+    @JsonCreator
+    private User(@JsonProperty("email") String email, @JsonProperty("password") String password,
+            @JsonProperty("username") String username) {
+        this.email = email;
+        this.password = password;
+        this.username = username;
+    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -53,5 +71,13 @@ public class User extends AuditedEntity implements UserDetails {
     @Override
     public boolean isEnabled() {
         return true;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 }

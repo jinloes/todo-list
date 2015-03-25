@@ -10,6 +10,6 @@ import org.springframework.data.rest.core.annotation.RepositoryRestResource;
  * Repository for todo items.
  */
 @RepositoryRestResource(collectionResourceRel = "todos", path = "todos")
-public interface ToDoRespository extends MongoRepository<ToDo, String> {
+public interface ToDoRepository extends MongoRepository<ToDo, String> {
     Page<ToDo> findByCreatedBy(@Param("user") String userId, Pageable pageable);
 }

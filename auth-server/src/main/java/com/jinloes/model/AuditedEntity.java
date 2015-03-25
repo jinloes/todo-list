@@ -3,24 +3,28 @@ package com.jinloes.model;
 import org.joda.time.DateTime;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.domain.Auditable;
+import org.springframework.data.mongodb.core.mapping.DBRef;
+import org.springframework.data.mongodb.core.mapping.Field;
 
 /**
  * Created by jinloes on 3/23/15.
  */
-public abstract class AuditedEntity implements Auditable<String, String> {
+public abstract class AuditedEntity implements Auditable<User, String> {
     @Id
+    @Field("_id")
     private String id;
-    private String createdBy;
+    @DBRef
+    private User createdBy;
     private DateTime creationDate;
 
 
     @Override
-    public String getCreatedBy() {
+    public User getCreatedBy() {
         return createdBy;
     }
 
     @Override
-    public void setCreatedBy(String createdBy) {
+    public void setCreatedBy(User createdBy) {
         this.createdBy = createdBy;
     }
 
@@ -35,12 +39,12 @@ public abstract class AuditedEntity implements Auditable<String, String> {
     }
 
     @Override
-    public String getLastModifiedBy() {
+    public User getLastModifiedBy() {
         return null;
     }
 
     @Override
-    public void setLastModifiedBy(String lastModifiedBy) {
+    public void setLastModifiedBy(User lastModifiedBy) {
 
     }
 

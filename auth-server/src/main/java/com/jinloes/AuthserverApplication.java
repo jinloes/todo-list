@@ -17,6 +17,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 import org.springframework.core.annotation.Order;
 import org.springframework.data.rest.webmvc.config.RepositoryRestMvcConfiguration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders
         .AuthenticationManagerBuilder;
@@ -31,8 +32,11 @@ import org.springframework.security.oauth2.config.annotation.web.configuration
 import org.springframework.security.oauth2.config.annotation.web.configuration
         .EnableAuthorizationServer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableResourceServer;
+import org.springframework.security.oauth2.config.annotation.web.configuration
+        .ResourceServerConfigurerAdapter;
 import org.springframework.security.oauth2.config.annotation.web.configurers
         .AuthorizationServerEndpointsConfigurer;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
@@ -75,6 +79,17 @@ public class AuthserverApplication extends RepositoryRestMvcConfiguration {
     }
 
     @Configuration
+    public static class ResourceServerConfiguration extends ResourceServerConfigurerAdapter {
+        @Override
+        public void configure(HttpSecurity http) throws Exception {
+            http.anonymous().and()
+                    .authorizeRequests()
+                    .antMatchers(HttpMethod.POST, "/users").permitAll()
+                    .anyRequest().authenticated();
+        }
+    }
+
+    @Configuration
     @Order(-10)
     protected static class LoginConfig extends WebSecurityConfigurerAdapter {
 
@@ -85,13 +100,19 @@ public class AuthserverApplication extends RepositoryRestMvcConfiguration {
 
         @Override
         protected void configure(HttpSecurity http) throws Exception {
-            http.formLogin()
+            http.csrf()
+                    .requireCsrfProtectionMatcher(new AntPathRequestMatcher("/oauth/authorize"))
+                    .disable()
+                    .formLogin()
                     .loginPage("/login").permitAll()
                     .and()
                     .requestMatchers().antMatchers("/login", "/oauth/authorize",
                     "/oauth/confirm_access")
                     .and()
-                    .authorizeRequests().anyRequest().authenticated();
+                    .anonymous()
+                    .and()
+                    .authorizeRequests()
+                    .anyRequest().authenticated();
         }
 
         @Override
