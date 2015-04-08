@@ -58,7 +58,8 @@ public class Application {
         @Override
         public void configure(HttpSecurity http) throws Exception {
             http.authorizeRequests()
-                    .antMatchers("/index.html", "/home.html", "/", "/registration").permitAll()
+                    .antMatchers("/index.html", "/home.html", "/", "/registration", "/webjars/**")
+                    .permitAll()
                     .anyRequest().authenticated()
                     .and()
                     .csrf().csrfTokenRepository(csrfTokenRepository())
