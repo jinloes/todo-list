@@ -17,13 +17,17 @@ var app = angular.module('hello', ['ngRoute'])
                     templateUrl: 'register.html',
                     controller: 'register'
                 })
+                .when('/login', {
+                    templateUrl: 'login.html',
+                    controller: 'login'
+                })
                 .otherwise('/');
         })
         .controller('navigation', function ($rootScope, $scope, $http, $location, $route) {
             $scope.tab = function (route) {
                 return $route.current && route === $route.current.controller;
             };
-            $http.get('http://localhost:8080/user').success(function (data) {
+            /*$http.get('http://localhost:8080/user').success(function (data) {
                 if (data.id) {
                     $scope.authenticated = true;
                     $rootScope.userId = data.id;
@@ -32,7 +36,7 @@ var app = angular.module('hello', ['ngRoute'])
                 }
             }).error(function () {
                 $rootScope.authenticated = false;
-            });
+            });*/
             $scope.credentials = {};
             $scope.logout = function () {
                 $http.post('logout', {}).success(function () {
@@ -45,9 +49,23 @@ var app = angular.module('hello', ['ngRoute'])
             }
         })
         .controller('home', function ($scope, $http) {
-            $http.get('http://localhost:8080/resource/').success(function (data) {
+            /*$http.get('http://localhost:8080/resource/').success(function (data) {
                 $scope.greeting = data;
-            })
+            })*/
+        })
+        .controller('login', function ($rootScope, $scope, $http, $location) {
+            $scope.login = function () {
+                $http.post("http://localhost:8080/test", $scope.credentials)
+                    .success(function (data) {
+                        if (data.id) {
+                            $rootScope.authenticated = true;
+                            $rootScope.user = data;
+                            $location.path('/')
+                        } else {
+                            $rootScope.authenticated = false;
+                        }
+                    });
+            }
         })
         .controller('test', function ($scope, $http) {
             $scope.test = 'foo'

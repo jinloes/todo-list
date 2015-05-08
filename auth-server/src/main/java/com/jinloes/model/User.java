@@ -23,7 +23,7 @@ public class User extends AuditedEntity implements UserDetails {
     }
 
     @JsonCreator
-    private User(@JsonProperty("email") String email, @JsonProperty("password") String password,
+    public User(@JsonProperty("email") String email, @JsonProperty("password") String password,
             @JsonProperty("username") String username) {
         this.email = email;
         this.password = password;
