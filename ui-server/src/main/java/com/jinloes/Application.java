@@ -79,7 +79,7 @@ public class Application {
         @Override
         public void configure(HttpSecurity http) throws Exception {
             http.authorizeRequests()
-                    .antMatchers("/index.html", "/home.html", "/", "/registration", "/webjars/**", "/login", "/test")
+                    .antMatchers("/index.html", "/home.html", "/", "/registration", "/webjars/**", "/login.html", "/token")
                     .permitAll()
                     .anyRequest().authenticated()
                     .and()

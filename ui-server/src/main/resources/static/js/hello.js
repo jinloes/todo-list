@@ -5,10 +5,6 @@ var app = angular.module('hello', ['ngRoute'])
                     templateUrl: 'home.html',
                     controller: 'home'
                 })
-                .when('/test', {
-                    templateUrl: 'test.html',
-                    controller: 'test'
-                })
                 .when('/todos', {
                     templateUrl: 'todos.html',
                     controller: 'todos'
@@ -27,16 +23,6 @@ var app = angular.module('hello', ['ngRoute'])
             $scope.tab = function (route) {
                 return $route.current && route === $route.current.controller;
             };
-            /*$http.get('http://localhost:8080/user').success(function (data) {
-                if (data.id) {
-                    $scope.authenticated = true;
-                    $rootScope.userId = data.id;
-                } else {
-                    $rootScope.authenticated = false;
-                }
-            }).error(function () {
-                $rootScope.authenticated = false;
-            });*/
             $scope.credentials = {};
             $scope.logout = function () {
                 $http.post('logout', {}).success(function () {
@@ -49,13 +35,10 @@ var app = angular.module('hello', ['ngRoute'])
             }
         })
         .controller('home', function ($scope, $http) {
-            /*$http.get('http://localhost:8080/resource/').success(function (data) {
-                $scope.greeting = data;
-            })*/
         })
-        .controller('login', function ($rootScope, $scope, $http, $location) {
+        .controller('login', function ($rootScope, $scope, $http, $location, $log) {
             $scope.login = function () {
-                $http.post("http://localhost:8080/test", $scope.credentials)
+                $http.post("http://localhost:8080/token", $scope.credentials)
                     .success(function (data) {
                         if (data.id) {
                             $rootScope.authenticated = true;
@@ -64,11 +47,16 @@ var app = angular.module('hello', ['ngRoute'])
                         } else {
                             $rootScope.authenticated = false;
                         }
+                    })
+                    .error(function(response) {
+                        $log.info(response);
+                        if(response.error_code === "ERR-01") {
+                            $scope.error = true;
+                            $scope.message = response.message;
+                            $scope.resolution = response.resolution;
+                        }
                     });
             }
-        })
-        .controller('test', function ($scope, $http) {
-            $scope.test = 'foo'
         })
         .controller('register', function ($scope, $http, $window) {
             $scope.register = function () {

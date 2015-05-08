@@ -1,6 +1,6 @@
 buildscript {
     ext {
-        springBootVersion = '1.2.2.RELEASE'
+        springBootVersion = '1.2.3.RELEASE'
     }
     repositories {
         mavenCentral()
@@ -27,6 +27,8 @@ repositories {
 }
 
 dependencies {
+    // Project depedencies
+    compile project(":common")
     // Spring Dependencies
     compile("org.springframework.boot:spring-boot-starter", "org.springframework.boot:spring-boot-starter-web")
     compile("org.springframework.boot:spring-boot-starter-actuator")
@@ -37,6 +39,7 @@ dependencies {
     compile("org.springframework.security.oauth:spring-security-oauth2:2.0.6.RELEASE")
     compile("joda-time:joda-time:2.7")
     compile("com.fasterxml.jackson.datatype:jackson-datatype-joda")
+    compile("cz.jirutka.spring:embedmongo-spring:1.3.1")
     // Database
     compile("de.flapdoodle.embed:de.flapdoodle.embed.mongo:1.47.3")
     testCompile("junit:junit")

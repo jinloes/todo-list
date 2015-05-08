@@ -10,7 +10,7 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
  * Created by jinloes on 5/6/15.
  */
 @Configuration
-@Order(-10)
+@Order
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
