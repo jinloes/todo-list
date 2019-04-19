@@ -1,6 +1,6 @@
 buildscript {
     ext {
-        springBootVersion = '1.2.2.RELEASE'
+        springBootVersion = '2.1.4.RELEASE'
     }
     repositories {
         mavenCentral()
@@ -12,9 +12,9 @@ buildscript {
 }
 
 apply plugin: 'java'
-apply plugin: 'eclipse'
 apply plugin: 'idea'
-apply plugin: 'spring-boot'
+apply plugin: 'org.springframework.boot'
+apply plugin: 'io.spring.dependency-management'
 
 jar {
     baseName = 'todo-list-ui'
@@ -44,8 +44,4 @@ dependencies {
     compile('org.webjars.bower:bootstrap:3.3.4')
     testCompile("junit:junit")
     testCompile("org.springframework.boot:spring-boot-starter-test")
-}
-
-task wrapper(type: Wrapper) {
-    gradleVersion = '2.3'
 }

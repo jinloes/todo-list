@@ -1,26 +1,28 @@
 package com.jinloes.model;
 
-import org.joda.time.DateTime;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.domain.Auditable;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Field;
 
+import java.time.Instant;
+import java.util.Optional;
+
 /**
  * Created by jinloes on 3/23/15.
  */
-public abstract class AuditedEntity implements Auditable<User, String> {
+public abstract class AuditedEntity implements Auditable<User, String, Instant> {
     @Id
     @Field("_id")
     private String id;
     @DBRef
     private User createdBy;
-    private DateTime creationDate;
+    private Instant creationDate;
 
 
     @Override
-    public User getCreatedBy() {
-        return createdBy;
+    public Optional<User> getCreatedBy() {
+        return Optional.ofNullable(createdBy);
     }
 
     @Override
@@ -29,18 +31,18 @@ public abstract class AuditedEntity implements Auditable<User, String> {
     }
 
     @Override
-    public DateTime getCreatedDate() {
-        return creationDate;
+    public Optional<Instant> getCreatedDate() {
+        return Optional.ofNullable(creationDate);
     }
 
     @Override
-    public void setCreatedDate(DateTime creationDate) {
+    public void setCreatedDate(Instant creationDate) {
         this.creationDate = creationDate;
     }
 
     @Override
-    public User getLastModifiedBy() {
-        return null;
+    public Optional<User> getLastModifiedBy() {
+        return Optional.empty();
     }
 
     @Override
@@ -49,12 +51,12 @@ public abstract class AuditedEntity implements Auditable<User, String> {
     }
 
     @Override
-    public DateTime getLastModifiedDate() {
-        return null;
+    public Optional<Instant> getLastModifiedDate() {
+        return Optional.empty();
     }
 
     @Override
-    public void setLastModifiedDate(DateTime lastModifiedDate) {
+    public void setLastModifiedDate(Instant lastModifiedDate) {
 
     }
 

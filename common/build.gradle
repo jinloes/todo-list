@@ -5,10 +5,6 @@ buildscript {
     }
 }
 
-apply plugin: 'java'
-apply plugin: 'eclipse'
-apply plugin: 'idea'
-
 jar {
     baseName = 'todo-list-common'
     version = '0.1.0'
@@ -21,8 +17,4 @@ repositories {
 
 dependencies {
     compile 'com.fasterxml.jackson.core:jackson-annotations:2.5.3'
-}
-
-task wrapper(type: Wrapper) {
-    gradleVersion = '2.3'
 }
