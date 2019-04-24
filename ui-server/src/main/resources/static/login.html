@@ -1,16 +1,39 @@
 <div class="alert alert-danger" ng-show="resolution">
     {{message}} {{resolution}}
 </div>
-<form role="form" ng-submit="login()">
-    <div class="form-group">
-        <label for="username">Username:</label>
-        <input type="text" class="form-control" id="username" name="username"
-               ng-model="credentials.username"/>
+
+<div class="slds-grid slds-gutters">
+    <div class="slds-col">
+        <span></span>
     </div>
-    <div class="form-group">
-        <label for="password">Password:</label>
-        <input type="password" class="form-control" id="password" name="password"
-               ng-model="credentials.password"/>
+    <div class="slds-col">
+        <form role="form" ng-submit="login()">
+            <!--<div class="form-group">
+                <label for="username">Username:</label>
+                <input type="text" class="form-control" id="username" name="username"
+                       ng-model="credentials.username"/>
+            </div>
+            <div class="form-group">
+                <label for="password">Password:</label>
+                <input type="password" class="form-control" id="password" name="password"
+                       ng-model="credentials.password"/>
+            </div>-->
+            <div class="slds-form-element">
+                <label class="slds-form-element__label" for="form-element-01">Username</label>
+                <div class="slds-form-element__control">
+                    <input type="text" id="form-element-01" placeholder="" class="slds-input" ng-model="credentials.username"/>
+                </div>
+            </div>
+            <div class="slds-form-element">
+                <label class="slds-form-element__label" for="form-element-01">Password</label>
+                <div class="slds-form-element__control">
+                    <input type="text" id="form-element-02" placeholder="" class="slds-input" ng-model="credentials.password"/>
+                </div>
+            </div>
+            <button type="submit" class="slds-button slds-button_brand">Log In</button>
+        </form>
     </div>
-    <button type="submit" class="btn btn-primary">Submit</button>
-</form>
+    <div class="slds-col">
+        <span></span>
+    </div>
+</div>

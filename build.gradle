@@ -1,11 +1,34 @@
-allprojects {
+buildscript {
     repositories {
         mavenCentral()
-        maven { url "http://repo.spring.io/release" }
+        maven {
+            url "http://repo.spring.io/release"
+        }
     }
-    
+    dependencies {
+        classpath "org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}"
+        classpath 'io.spring.gradle:dependency-management-plugin:1.0.6.RELEASE'
+    }
+}
+
+plugins {
+    id 'org.springframework.boot' version '2.1.4.RELEASE' apply false
+}
+
+subprojects {
     apply plugin: 'java'
     apply plugin: 'idea'
+    apply plugin: "io.spring.dependency-management"
+
+    repositories {
+        mavenCentral()
+        maven {
+            url "http://repo.spring.io/release"
+        }
+        maven {
+            url "https://plugins.gradle.org/m2/"
+        }
+    }
 
     sourceCompatibility = 1.8
     targetCompatibility = 1.8

@@ -1,18 +1,6 @@
-buildscript {
-    repositories {
-        mavenCentral()
-        maven { url "http://repo.spring.io/release" }
-    }
-}
-
 jar {
     baseName = 'todo-list-common'
     version = '0.1.0'
-}
-
-repositories {
-    mavenCentral()
-    maven { url "http://repo.spring.io/release" }
 }
 
 dependencies {

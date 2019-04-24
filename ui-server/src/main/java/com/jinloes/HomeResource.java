@@ -53,8 +53,7 @@ public class HomeResource {
         OAuth2AccessToken token = accessTokenProvider.obtainAccessToken(details, new
                 DefaultAccessTokenRequest());
         restTemplate.getOAuth2ClientContext().setAccessToken(token);
-        UserResource user = restTemplate.getForObject("http://localhost:9090/uaa/user",
-                UserResource.class);
+        UserResource user = restTemplate.getForObject("http://localhost:9090/uaa/user", UserResource.class);
         return user;
     }
 
