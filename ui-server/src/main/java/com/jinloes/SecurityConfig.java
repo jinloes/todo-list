@@ -15,26 +15,26 @@ import org.springframework.security.web.csrf.HttpSessionCsrfTokenRepository;
 @Order(Ordered.HIGHEST_PRECEDENCE)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-    @Override
-    public void configure(WebSecurity web) throws Exception {
-        web.ignoring().antMatchers("/resources/**");
-    }
+  @Override
+  public void configure(WebSecurity web) throws Exception {
+    web.ignoring().antMatchers("/resources/**");
+  }
 
-    @Override
-    protected void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests()
-                .antMatchers("/**/*.html", "/", "/registration", "/webjars/**", "/login.html", "/token",
-                        "/js/**", "/components/**", "/assets/**", "/design-tokens/**", "/scss/**", "/swatches/**")
-                .permitAll()
-                .anyRequest().authenticated()
-                .and()
-                .csrf().disable();
-                //.csrfTokenRepository(csrfTokenRepository());
-    }
+  @Override
+  protected void configure(HttpSecurity http) throws Exception {
+    http.authorizeRequests()
+      .antMatchers("/**/*.ico", "/**/*.html", "/", "/registration", "/webjars/**", "/login", "/token",
+        "/**/*.js", "/**/*.woff", "/**/*.woff2", "/**/*.svg")
+      .permitAll()
+      .anyRequest().authenticated()
+      .and()
+      .csrf().disable();
+    //.csrfTokenRepository(csrfTokenRepository());
+  }
 
-    private CsrfTokenRepository csrfTokenRepository() {
-        HttpSessionCsrfTokenRepository repository = new HttpSessionCsrfTokenRepository();
-        repository.setHeaderName("X-XSRF-TOKEN");
-        return repository;
-    }
+  private CsrfTokenRepository csrfTokenRepository() {
+    HttpSessionCsrfTokenRepository repository = new HttpSessionCsrfTokenRepository();
+    repository.setHeaderName("X-XSRF-TOKEN");
+    return repository;
+  }
 }

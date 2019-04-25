@@ -13,17 +13,23 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "build/resources/main/static/webapp",
+            "outputPath": "build/resources/main/static",
             "index": "src/main/webapp/index.html",
             "main": "src/main/webapp/main.ts",
             "polyfills": "src/main/webapp/polyfills.ts",
             "tsConfig": "tsconfig.app.json",
             "assets": [
               "src/main/webapp/favicon.ico",
-              "src/main/webapp/assets"
+              "src/main/webapp/assets",
+              {
+                "glob": "**/*",
+                "input": "./node_modules/@salesforce-ux/design-system/assets",
+                "output": "./assets/"
+              }
             ],
             "styles": [
-              "src/main/webapp/styles.css"
+              "src/main/webapp/styles.css",
+              "node_modules/@salesforce-ux/design-system/assets/styles/salesforce-lightning-design-system.css"
             ],
             "scripts": [],
             "es5BrowserSupport": true
