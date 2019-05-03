@@ -2,32 +2,42 @@
   <div class="slds-col">
     <span></span>
   </div>
-  <h2>Login</h2>
-  <div class="slds-col">
+  <div class="slds-col slds-grow-none">
+    <div class="slds-text-heading_large">Login to begin creating and tracking tasks!</div>
+    <div class="slds-notify slds-notify_alert slds-theme_alert-texture slds-theme_error" role="alert"
+         *ngIf="message && message.type === 'loginError'">
+      <span class="slds-assistive-text">error</span>
+      <span class="slds-icon_container slds-icon-utility-error slds-m-right_x-small"
+            title="Description of icon when needed">
+    <svg class="slds-icon slds-icon_x-small" aria-hidden="true">
+      <use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#error"></use>
+    </svg>
+  </span>
+      <h2>{{message.text}}</h2>
+    </div>
     <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-      <!--<div class="form-group">
-          <label for="username">Username:</label>
-          <input type="text" class="form-control" id="username" name="username"
-                 ng-model="credentials.username"/>
-      </div>
-      <div class="form-group">
-          <label for="password">Password:</label>
-          <input type="password" class="form-control" id="password" name="password"
-                 ng-model="credentials.password"/>
-      </div>-->
-      <div class="slds-form-element">
+      <div class="slds-form-element" [ngClass]="{'slds-has-error': isUsernameInvalid}">
         <label class="slds-form-element__label" for="form-element-01">Username</label>
         <div class="slds-form-element__control">
           <input type="text" id="form-element-01" placeholder="" class="slds-input" formControlName="username"/>
         </div>
-      </div>
-      <div class="slds-form-element">
-        <label class="slds-form-element__label" for="form-element-01">Password</label>
-        <div class="slds-form-element__control">
-          <input type="text" id="form-element-02" placeholder="" class="slds-input" formControlName="password"/>
+        <div *ngIf="isUsernameInvalid" class="slds-form-error">
+          <div class="slds-form-element__help" *ngIf="f.username.errors.required">Username is required</div>
         </div>
       </div>
-      <button type="submit" class="slds-button slds-button_brand">Log In</button>
+      <div class="slds-form-element" [ngClass]="{'slds-has-error': isPasswordInvalid}">
+        <label class="slds-form-element__label" for="form-element-01">Password</label>
+        <div class="slds-form-element__control">
+          <input type="password" id="form-element-02" placeholder="" class="slds-input" formControlName="password"/>
+        </div>
+        <div *ngIf="isPasswordInvalid">
+          <div class="slds-form-element__help" *ngIf="f.password.errors.required">Password is required</div>
+        </div>
+      </div>
+      <div class="slds-form-element__help" *ngIf="errorMessage">{{errorMessage}}</div>
+      <button type="submit" class="slds-button slds-button_brand slds-button_stretch" [disabled]="!loginForm.valid">
+        Log In
+      </button>
     </form>
   </div>
   <div class="slds-col">

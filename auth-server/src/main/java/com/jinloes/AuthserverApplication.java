@@ -17,6 +17,9 @@ import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableResourceServer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.ResourceServerConfigurerAdapter;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import org.springframework.web.filter.CorsFilter;
 
 import javax.annotation.PostConstruct;
 
@@ -58,6 +61,24 @@ public class AuthserverApplication {
         return mapper;
     }
 
+   /* @Bean
+    public CorsFilter corsFilter() {
+        // Old Config
+        //response.setHeader("Access-Control-Allow-Origin", "*");
+        //        response.setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, DELETE");
+        //        response.setHeader("Access-Control-Max-Age", "3600");
+        //        response.setHeader("Access-Control-Allow-Headers", "accept, Content-Type, x-requested-with");
+        final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        final CorsConfiguration config = new CorsConfiguration();
+        config.addAllowedOrigin("*");
+        config.addAllowedHeader("*");
+        config.addAllowedMethod("*");
+        config.addExposedHeader("Authorization");
+        config.addExposedHeader("Content-Type");
+        source.registerCorsConfiguration("/**", config);
+        return new CorsFilter(source);
+    }*/
+
     @Configuration
     public static class ResourceServerConfiguration extends ResourceServerConfigurerAdapter {
         @Override
@@ -65,6 +86,7 @@ public class AuthserverApplication {
             http.anonymous().and()
                     .authorizeRequests()
                     .antMatchers(HttpMethod.POST, "/users").permitAll()
+                    .antMatchers(HttpMethod.OPTIONS, "/oauth/token").permitAll()
                     .anyRequest().authenticated();
         }
     }
