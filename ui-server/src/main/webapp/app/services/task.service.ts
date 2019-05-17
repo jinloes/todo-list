@@ -1,17 +1,31 @@
 import {Injectable} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Observable} from 'rxjs';
+import {Task} from '../task';
+import {AuthenticationService} from "./authentication.service";
 
 @Injectable({
   providedIn: 'root'
 })
 export class TaskService {
-  private baseUrl = '/todos';
+  private baseUrl = 'http://localhost:9090/uaa/todos';
 
-  constructor(private http: HttpClient) {
+  constructor(private authService: AuthenticationService, private http: HttpClient) {
   }
 
   getTasks(): Observable<any> {
-    return this.http.get(`${this.baseUrl}`);
+    let headers = new HttpHeaders({
+      'Authorization': 'Bearer ' + this.authService.getToken(),
+    });
+    let options = {headers: headers};
+    return this.http.get(`${this.baseUrl}`, options);
+  }
+
+  create(task: Task): Observable<any> {
+    let headers = new HttpHeaders({
+      'Authorization': 'Bearer ' + this.authService.getToken(),
+    });
+    let options = {headers: headers};
+    return this.http.post(`${this.baseUrl}`, task, options);
   }
 }

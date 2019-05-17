@@ -1,15 +1,168 @@
-<h1>To Dos</h1>
-<!--<form role="form" ng-submit="createToDo()">
-    <div class="form-group">
-        <label for="name">Name:</label>
-        <input type="text" class="form-control" id="name" name="name"
-               ng-model="todo.name"/>
+<div class="slds-tabs_card">
+  <div class="slds-page-header">
+    <div class="slds-page-header__row">
+      <div class="slds-page-header__col-title">
+        <div class="slds-media">
+          <div class="slds-media__figure">
+          <span class="slds-icon_container slds-icon-standard-task" title="task">
+            <svg class="slds-icon slds-page-header__icon" aria-hidden="true">
+              <use xmlns:xlink="http://www.w3.org/1999/xlink"
+                   xlink:href="/assets/icons/standard-sprite/svg/symbols.svg#task"/>
+            </svg>
+            <span class="slds-assistive-text">task</span>
+          </span>
+          </div>
+          <div class="slds-media__body">
+            <div class="slds-page-header__name">
+              <div class="slds-page-header__name-title">
+                <h1>
+                  <span class="slds-page-header__title slds-truncate" title="Tasks">Tasks</span>
+                </h1>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="slds-page-header__col-actions">
+        <div class="slds-page-header__controls">
+          <div class="slds-page-header__control">
+            <ul class="slds-button-group-list">
+              <li>
+                <button class="slds-button slds-button_neutral" (click)="openNew()">New</button>
+              </li>
+              <li>
+                <div class="slds-dropdown-trigger slds-dropdown-trigger_click">
+                  <button class="slds-button slds-button_icon slds-button_icon-border-filled" aria-haspopup="true"
+                          title="More Actions">
+                    <svg class="slds-button__icon" aria-hidden="true">
+                      <use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#down"></use>
+                    </svg>
+                    <span class="slds-assistive-text">More Actions</span>
+                  </button>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
     </div>
-    <button type="submit" class="btn btn-primary">Submit</button>
-</form>-->
-<div class="alert alert-info" role="alert" ng-hide="todos && todos.length > 0">
-    There are no items yet.
+    <div class="slds-page-header__row">
+      <div class="slds-page-header__col-meta">
+        <p class="slds-page-header__meta-text">{{(tasks | async)?.page.totalElements}} items • Updated 13 minutes ago</p>
+      </div>
+    </div>
+  </div>
 </div>
+<div class="alert alert-info" role="alert" ng-hide="todos && todos.length > 0">
+  There are no items yet.
+</div>
+<table aria-multiselectable="true"
+       class="slds-table slds-table_bordered slds-table_fixed-layout slds-table_resizable-cols" role="grid">
+  <thead>
+  <tr class="slds-line-height_reset">
+    <th class="slds-text-align_right" scope="col" style="width:3.25rem">
+      <span id="column-group-header" class="slds-assistive-text">Choose a row</span>
+      <div class="slds-th__action slds-th__action_form">
+        <div class="slds-checkbox">
+          <input type="checkbox" name="options" id="checkbox-293" value="checkbox-293" tabindex="0"
+                 aria-labelledby="check-select-all-label column-group-header"/>
+          <label class="slds-checkbox__label" for="checkbox-293" id="check-select-all-label">
+            <span class="slds-checkbox_faux"></span>
+            <span class="slds-form-element__label slds-assistive-text">Select All</span>
+          </label>
+        </div>
+      </div>
+    </th>
+    <th aria-label="Name" aria-sort="none" class="slds-is-resizable slds-is-sortable" scope="col">
+      <a class="slds-th__action slds-text-link_reset" href="javascript:void(0);" role="button" tabindex="0">
+        <span class="slds-assistive-text">Sort by: </span>
+        <div class="slds-grid slds-grid_vertical-align-center slds-has-flexi-truncate">
+          <span class="slds-truncate" title="Name">Name</span>
+          <span class="slds-icon_container slds-icon-utility-arrowdown">
+              <svg class="slds-icon slds-icon-text-default slds-is-sortable__icon " aria-hidden="true">
+                <use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#arrowdown"></use>
+              </svg>
+            </span>
+        </div>
+      </a>
+      <div class="slds-resizable">
+        <input type="range" aria-label="Name column width" class="slds-resizable__input slds-assistive-text"
+               id="cell-resize-handle-533" max="1000" min="20" tabindex="0"/>
+        <span class="slds-resizable__handle">
+            <span class="slds-resizable__divider"></span>
+          </span>
+      </div>
+    </th>
+    <th aria-label="Deadline" aria-sort="none" class="slds-is-resizable slds-is-sortable" scope="col">
+      <a class="slds-th__action slds-text-link_reset" href="javascript:void(0);" role="button" tabindex="0">
+        <span class="slds-assistive-text">Sort by: </span>
+        <div class="slds-grid slds-grid_vertical-align-center slds-has-flexi-truncate">
+          <span class="slds-truncate" title="Deadline">Deadline</span>
+          <span class="slds-icon_container slds-icon-utility-arrowdown">
+              <svg class="slds-icon slds-icon-text-default slds-is-sortable__icon " aria-hidden="true">
+                <use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#arrowdown"></use>
+              </svg>
+            </span>
+        </div>
+      </a>
+      <div class="slds-resizable">
+        <input type="range" aria-label="Deadline column width" class="slds-resizable__input slds-assistive-text"
+               id="cell-resize-handle-534" max="1000" min="20" tabindex="0"/>
+        <span class="slds-resizable__handle">
+            <span class="slds-resizable__divider"></span>
+          </span>
+      </div>
+    </th>
+    <th></th>
+    <th></th>
+    <th></th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr aria-selected="false" class="slds-hint-parent" *ngFor="let task of (tasks | async)?._embedded.todos">
+    <td class="slds-text-align_right" role="gridcell">
+      <div class="slds-checkbox">
+        <input type="checkbox" name="options" id="checkbox-01" value="checkbox-01" tabindex="0"
+               aria-labelledby="check-button-label-01 column-group-header"/>
+        <label class="slds-checkbox__label" for="checkbox-01" id="check-button-label-01">
+          <span class="slds-checkbox_faux"></span>
+          <span class="slds-form-element__label slds-assistive-text">Select item 1</span>
+        </label>
+      </div>
+    </td>
+    <th scope="row">
+      <div class="slds-truncate" title="{{task.name}}}">
+        <a href="javascript:void(0);" tabindex="0">{{task.name}}</a>
+      </div>
+    </th>
+    <td role="gridcell">
+      <div class="slds-truncate" title="asdfsad">asda</div>
+    </td>
+    <td role="gridcell">
+    </td>
+    <td role="gridcell">
+    </td>
+    <td role="gridcell">
+    </td>
+    <td role="gridcell">
+    </td>
+    <td role="gridcell">
+    </td>
+    <td role="gridcell">
+      <button class="slds-button slds-button_icon slds-button_icon-border-filled slds-button_icon-x-small"
+              aria-haspopup="true" tabindex="0" title="More actions for Acme - 1,200 Widgets">
+        <svg class="slds-button__icon slds-button__icon_hint slds-button__icon_small" aria-hidden="true">
+          <use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#down"></use>
+        </svg>
+        <span class="slds-assistive-text">More actions for Acme - 1,200 Widgets</span>
+      </button>
+    </td>
+  </tr>
+  </tbody>
+</table>
 <!--<form class="form-horizontal" role="form">
     <div class="form-group" *ngFor="let task of tasks | async">
         <div class="checkbox col-xs-9">

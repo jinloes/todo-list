@@ -49,4 +49,13 @@ export class AuthenticationService {
     localStorage.removeItem('currentUser');
     this.currentUserSubject.next(null);
   }
+
+  getToken() {
+    let authStr = localStorage.getItem("currentUser");
+    if (authStr) {
+      let auth = JSON.parse(authStr);
+      return auth['access_token'];
+    }
+    throw 'User does not have an access token.'
+  }
 }

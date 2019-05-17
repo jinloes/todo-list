@@ -9,6 +9,9 @@ import {ReactiveFormsModule} from "@angular/forms";
 import {HttpClientModule} from "@angular/common/http";
 import {HomeComponent} from './home/home.component';
 import {AlertComponent} from './alert/alert.component';
+import {TaskDialogComponent} from './task-dialog/task-dialog.component';
+import {MatDialogModule} from "@angular/material";
+import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 
 @NgModule({
   declarations: [
@@ -17,15 +20,21 @@ import {AlertComponent} from './alert/alert.component';
     LoginComponent,
     HomeComponent,
     AlertComponent,
+    TaskDialogComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
+    MatDialogModule,
+    BrowserAnimationsModule,
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [
+    TaskDialogComponent
+  ]
 })
 export class AppModule {
 }
