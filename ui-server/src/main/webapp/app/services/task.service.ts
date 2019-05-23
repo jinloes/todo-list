@@ -14,18 +14,10 @@ export class TaskService {
   }
 
   getTasks(): Observable<any> {
-    let headers = new HttpHeaders({
-      'Authorization': 'Bearer ' + this.authService.getToken(),
-    });
-    let options = {headers: headers};
-    return this.http.get(`${this.baseUrl}`, options);
+    return this.http.get(`${this.baseUrl}`);
   }
 
   create(task: Task): Observable<any> {
-    let headers = new HttpHeaders({
-      'Authorization': 'Bearer ' + this.authService.getToken(),
-    });
-    let options = {headers: headers};
-    return this.http.post(`${this.baseUrl}`, task, options);
+    return this.http.post(`${this.baseUrl}`, task);
   }
 }

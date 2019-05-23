@@ -1,22 +1,33 @@
 <!--The content below is only a placeholder and can be replaced.-->
-<div style="height: 5rem;">
+<div id="cloud-container">
+  <div class="slds-global-header">
+    <ul>
+      <li class="slds-context-bar__item" *ngIf="currentUser">
+        <a href="javascript:void(0);" class="slds-context-bar__label-action" title="Reminders">
+            <span class="slds-truncate" title="Logout">
+              <a class="nav-item nav-link" (click)="logout()">Logout</a>
+            </span>
+        </a>
+      </li>
+    </ul>
+  </div>
   <div class="slds-context-bar">
     <div class="slds-context-bar__primary">
-      <div
-        class="slds-context-bar__item slds-context-bar__dropdown-trigger slds-dropdown-trigger slds-dropdown-trigger_click slds-no-hover">
+      <div class="slds-context-bar__item slds-context-bar__dropdown-trigger slds-dropdown-trigger
+      slds-dropdown-trigger_click slds-no-hover">
         <div class="slds-context-bar__icon-action">
           <button class="slds-button slds-icon-waffle_container slds-context-bar__button"
                   title="Description of the icon when needed">
   <span class="slds-icon-waffle">
-  <span class="slds-r1"></span>
-  <span class="slds-r2"></span>
-  <span class="slds-r3"></span>
-  <span class="slds-r4"></span>
-  <span class="slds-r5"></span>
-  <span class="slds-r6"></span>
-  <span class="slds-r7"></span>
-  <span class="slds-r8"></span>
-  <span class="slds-r9"></span>
+    <span class="slds-r1"></span>
+    <span class="slds-r2"></span>
+    <span class="slds-r3"></span>
+    <span class="slds-r4"></span>
+    <span class="slds-r5"></span>
+    <span class="slds-r6"></span>
+    <span class="slds-r7"></span>
+    <span class="slds-r8"></span>
+    <span class="slds-r9"></span>
   </span>
             <span class="slds-assistive-text">Open App Launcher</span>
           </button>
@@ -34,8 +45,8 @@
             <span class="slds-truncate" title="Home">Home</span>
           </a>
         </li>
-        <li
-          class="slds-context-bar__item slds-context-bar__dropdown-trigger slds-dropdown-trigger slds-dropdown-trigger_click">
+        <li class="slds-context-bar__item slds-context-bar__dropdown-trigger slds-dropdown-trigger
+        slds-dropdown-trigger_click">
           <a href="javascript:void(0);" class="slds-context-bar__label-action" title="Menu Item">
             <span class="slds-truncate" title="Menu Item">Menu Item</span>
           </a>
@@ -85,15 +96,12 @@
             <span class="slds-truncate" title="Menu Item">Reminders</span>
           </a>
         </li>
-        <li class="slds-context-bar__item" *ngIf="currentUser">
-          <a href="javascript:void(0);" class="slds-context-bar__label-action" title="Reminders">
-            <span class="slds-truncate" title="Logout">
-              <a class="nav-item nav-link" (click)="logout()">Logout</a>
-            </span>
-          </a>
-        </li>
       </ul>
     </nav>
   </div>
+  <div style="height:100%; width:100% ; background-color: rgb(176, 196, 223); position: relative; z-index: 1;">
+    <div style="height:100%" class="slds-brand-band slds-template_default">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
 </div>
-<router-outlet></router-outlet>
