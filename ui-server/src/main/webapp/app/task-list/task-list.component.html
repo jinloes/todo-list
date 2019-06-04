@@ -41,21 +41,20 @@
   </div>
   <div class="slds-card__body slds-card__body_inner">
     <div class="slds-page-header__col-meta">
-      <p class="slds-page-header__meta-text">{{(tasks | async)?.page.totalElements}} items • Updated 13 minutes
-        ago</p>
+      <p class="slds-page-header__meta-text">{{totalTasks}} items • Updated {{timestamp | timeAgo}}</p>
     </div>
   </div>
   <div class="slds-card__body">
-    <div class="slds-table--header-fixed_container" style="height:450px;">
+    <!--<div class="slds-table&#45;&#45;header-fixed_container" style="height:450px;">
       <div class="slds-scrollable_y" style="height:100%;">
         <table aria-multiselectable="true" class="slds-table slds-table_bordered slds-table_fixed-layout
-    slds-table_resizable-cols slds-table--header-fixed" role="grid">
+        slds-table_resizable-cols slds-table&#45;&#45;header-fixed" role="grid">
           <thead>
           <tr class="slds-line-height_reset">
             <th class="slds-text-align_right" scope="col" style="width:3.25rem">
-              <div class="slds-cell-fixed">
+              <div class="slds-cell-fixed" style="width: 52px">
                 <span id="column-group-header" class="slds-assistive-text">Choose a row</span>
-                <div class="slds-th__action slds-th__action_form">
+                <div class="slds-th__action slds-align&#45;&#45;absolute-center slds-th__action_form">
                   <div class="slds-checkbox">
                     <input type="checkbox" name="options" id="checkbox-293" value="checkbox-293" tabindex="0"
                            aria-labelledby="check-select-all-label column-group-header"/>
@@ -120,9 +119,9 @@
             <th></th>
           </tr>
           </thead>
-          <tbody style="height:30rem;" class="slds-scrollable--y">
-          <tr aria-selected="false" class="slds-hint-parent" *ngFor="let task of (tasks | async)?._embedded.todos">
-            <td class="slds-text-align_right" role="gridcell">
+          <tbody style="height:20rem;">
+          <tr aria-selected="false" class="slds-hint-parent" *ngFor="let task of taskList">
+            <td class="slds-align&#45;&#45;absolute-center" role="gridcell">
               <div class="slds-checkbox">
                 <input type="checkbox" name="options" id="checkbox-01" value="checkbox-01" tabindex="0"
                        aria-labelledby="check-button-label-01 column-group-header"/>
@@ -163,9 +162,35 @@
           </tbody>
         </table>
       </div>
-    </div>
+    </div>-->
   </div>
-  <footer class="slds-card__footer">
-    <p>Page 1 of 1</p>
-  </footer>
+  <!--<footer class="slds-card__footer">
+    <p>Page {{pageNum}} of {{totalPages}}</p>
+  </footer>-->
+  <table class="slds-table_bordered slds-max-medium-table_stacked-horizontal slds-table_fixed-layout" ngl-datatable
+         [data]="taskList" trackByKey="rank" [loading]="loading" [(sort)]="sort" (sortChange)="onSort($event)"
+         (rowClick)="onRowClick($event)">
+    <ngl-datatable-column heading="" key="">
+      <ng-template nglDatatableCell let-index="index">
+        <div class="slds-checkbox">
+          <input type="checkbox" name="options" id="checkbox-{{index}}" value="checkbox-293" tabindex="0"
+                 aria-labelledby="check-select-all-label column-group-header"/>
+          <label class="slds-checkbox__label" for="checkbox-293" id="check-select-all-label2">
+            <span class="slds-checkbox_faux"></span>
+            <span class="slds-form-element__label slds-assistive-text">Select All</span>
+          </label>
+        </div>
+      </ng-template>
+    </ngl-datatable-column>
+    <ngl-datatable-column heading="Name" key="name" truncate sortable></ngl-datatable-column>
+    <ngl-datatable-column heading="Deadline" key="deadline" truncate="true" sortable>
+      <ng-template nglDatatableCell let-row="row"><b>{{row.surname}}</b></ng-template>
+    </ngl-datatable-column>
+    <!-- Loading overlay-->
+    <ng-template nglLoadingOverlay>
+      <div class="slds-box slds-box_small slds-theme_shade slds-text-align_center">Loading...</div>
+    </ng-template>
+    <!-- No rows overlay-->
+    <ng-template nglNoRowsOverlay>No data available in table!</ng-template>
+  </table>
 </article>

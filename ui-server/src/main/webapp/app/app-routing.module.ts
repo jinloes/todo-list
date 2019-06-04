@@ -1,6 +1,6 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
-import {TaskListComponent} from "./task-list.component";
+import {TaskListComponent} from "./task-list/task-list.component";
 import {AuthGuard} from "./guards/auth.guard";
 import {HomeComponent} from "./home/home.component";
 import {LoginComponent} from "./login/login.component";

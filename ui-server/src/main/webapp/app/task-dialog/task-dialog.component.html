@@ -1,65 +1,44 @@
-<div class="demo-only demo-only_viewport" style="height:640px">
-  <section role="dialog" tabindex="-1" class="slds-modal slds-fade-in-open slds-modal_small"
-           aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1">
-    <div class="slds-modal__container">
-      <header class="slds-modal__header">
-        <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close">
-          <svg class="slds-button__icon slds-button__icon_large" aria-hidden="true">
-            <use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#close"></use>
-          </svg>
-          <span class="slds-assistive-text">Close</span>
-        </button>
-        <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">New Task</h2>
-      </header>
-      <h3 class="slds-section-title slds-theme--shade slds-section-title--divider">
-        <span class="slds-section-header-title section-header-title slds-p-horizontal--small slds-truncate">
-        Task Information</span>
-      </h3>
-      <div class="slds-modal__content slds-p-around_medium">
-        <div class="slds-form" role="list">
-          <form class="slds-modal--form" [formGroup]="createTask" (ngSubmit)="onSubmit()">
-            <div class="slds-form__row">
-              <div class="slds-form__item" role="listitem">
-                <div class="slds-form-element slds-form-element_stacked"
-                     [ngClass]="{'slds-has-error': isNameInvalid}">
-                  <label class="slds-form-element__label" for="form-element-01">
-                    <abbr class="slds-required" title="required">*</abbr>Name</label>
-                  <div class="slds-form-element__control">
-                    <input type="text" id="form-element-01" class="slds-input" formControlName="name"/>
-                  </div>
-                  <div *ngIf="isNameInvalid" class="slds-form-error">
-                    <div class="slds-form-element__help" *ngIf="f.name.errors.required">Name is required</div>
-                  </div>
-                </div>
-              </div>
-              <div class="slds-form__item" role="listitem">
-                <div class="slds-form-element slds-form-element_stacked">
-                  <label class="slds-form-element__label" for="form-element-03">Deadline</label>
-                  <div class="slds-form-element__control">
-                    <input type="text" id="form-element-03" class="slds-input" formControlName="deadline"/>
-                  </div>
-                </div>
+<ngl-modal [header]="'New Task'" [(open)]="opened" [directional]="directional"
+           [dismissOnClickOutside]="dismissOnClickOutside">
+  <div class="slds-modal__content slds-p-around_medium">
+    <div class="slds-form" role="list">
+      <form class="slds-modal--form" [formGroup]="createTask" (ngSubmit)="onSubmit()">
+        <div class="slds-form__row">
+          <div class="slds-form__item" role="listitem">
+            <div class="slds-form-element slds-form-element_stacked">
+              <ngl-input label="Name" fieldLevelHelpTooltip="Task name"
+                         [error]="isNameInvalid ? 'Required, less than 32 chars' : null">
+                <input ngl type="input" formControlName="name" [required]="true" [disabled]="false" maxlength="32">
+              </ngl-input>
+            </div>
+          </div>
+          <div class="slds-form__item" role="listitem">
+            <div class="slds-form-element slds-form-element_stacked">
+              <div class="slds-form-element__control">
+                <ngl-datepicker-input label="Deadline" formControlName="deadline" [class.slds-has-error]="!true"
+                                      [readonlyInput]="readonlyInput" [showToday]="showToday" [format]="format">
+                </ngl-datepicker-input>
+
               </div>
             </div>
-            <div class="slds-form__row">
-              <div class="slds-form__item" role="listitem">
-                <div class="slds-form-element slds-form-element_stacked slds-form-element_1-col">
-                  <label class="slds-form-element__label" for="form-element-02">Notes</label>
-                  <div class="slds-form-element__control">
-                    <textarea maxlength="4000" id="form-element-02" class="slds-textarea"
-                              formControlName="notes"></textarea>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </form>
+          </div>
         </div>
-      </div>
-      <footer class="slds-modal__footer">
-        <button class="slds-button slds-button_neutral" (click)="closeDialog()">Cancel</button>
-        <button class="slds-button slds-button_brand" (click)="onSubmit()">Save</button>
-      </footer>
+        <div class="slds-form__row">
+          <div class="slds-form__item" role="listitem">
+            <div class="slds-form-element slds-form-element_stacked slds-form-element_1-col">
+              <ngl-textarea label="Notes" fieldLevelHelpTooltip="Some helpful information"
+                            [error]="false ? '' : null">
+            <textarea ngl [required]="false" [disabled]="false" formControlName="notes">
+            </textarea>
+              </ngl-textarea>
+            </div>
+          </div>
+        </div>
+      </form>
     </div>
-  </section>
-  <div class="slds-backdrop slds-backdrop_open"></div>
-</div>
+  </div>
+  <ng-template nglModalFooter>
+    <button class="slds-button slds-button_neutral" (click)="cancel()">Cancel</button>
+    <button class="slds-button slds-button_brand" (click)="onSubmit()">Save</button>
+  </ng-template>
+</ngl-modal>

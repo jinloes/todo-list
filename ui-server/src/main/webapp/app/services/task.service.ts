@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {Task} from '../task';
 import {AuthenticationService} from "./authentication.service";
@@ -14,7 +14,9 @@ export class TaskService {
   }
 
   getTasks(): Observable<any> {
-    return this.http.get(`${this.baseUrl}`);
+    let params = new HttpParams()
+      .append('size', '50');
+    return this.http.get(`${this.baseUrl}`, {params: params});
   }
 
   create(task: Task): Observable<any> {

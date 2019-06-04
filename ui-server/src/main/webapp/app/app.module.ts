@@ -3,7 +3,7 @@ import {NgModule} from '@angular/core';
 
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
-import {TaskListComponent} from "./task-list.component";
+import {TaskListComponent} from "./task-list/task-list.component";
 import {LoginComponent} from './login/login.component';
 import {ReactiveFormsModule} from "@angular/forms";
 import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
@@ -13,6 +13,8 @@ import {TaskDialogComponent} from './task-dialog/task-dialog.component';
 import {MatDialogModule} from "@angular/material";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {TaskHttpInterceptor} from "./task-http-interceptor.service";
+import {TimeAgoPipe} from "time-ago-pipe";
+import {NglModule} from "ng-lightning";
 
 @NgModule({
   declarations: [
@@ -22,6 +24,7 @@ import {TaskHttpInterceptor} from "./task-http-interceptor.service";
     HomeComponent,
     AlertComponent,
     TaskDialogComponent,
+    TimeAgoPipe,
   ],
   imports: [
     BrowserModule,
@@ -30,6 +33,7 @@ import {TaskHttpInterceptor} from "./task-http-interceptor.service";
     HttpClientModule,
     MatDialogModule,
     BrowserAnimationsModule,
+    NglModule,
   ],
   providers: [
     {

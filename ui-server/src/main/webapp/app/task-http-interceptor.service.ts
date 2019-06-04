@@ -10,7 +10,6 @@ export class TaskHttpInterceptor implements HttpInterceptor {
 
   constructor(private authService: AuthenticationService,
               private router: Router) {
-
   }
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
@@ -28,7 +27,7 @@ export class TaskHttpInterceptor implements HttpInterceptor {
         this.authService.logout();
         this.router.navigate(['/login']);
       }
-      const error = err.error.message || err.statusText;
+      const error = err.error.error || err.statusText;
       return throwError(error);
     }));
   }
