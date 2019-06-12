@@ -3,4 +3,5 @@ export class Task {
   name: string;
   notes: string;
   deadline: Date;
+  checked: boolean;
 }

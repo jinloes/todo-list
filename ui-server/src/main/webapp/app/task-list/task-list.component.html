@@ -45,152 +45,57 @@
     </div>
   </div>
   <div class="slds-card__body">
-    <!--<div class="slds-table&#45;&#45;header-fixed_container" style="height:450px;">
+    <div class="slds-table_header-fixed_container" style="height:50vw;">
       <div class="slds-scrollable_y" style="height:100%;">
-        <table aria-multiselectable="true" class="slds-table slds-table_bordered slds-table_fixed-layout
-        slds-table_resizable-cols slds-table&#45;&#45;header-fixed" role="grid">
-          <thead>
-          <tr class="slds-line-height_reset">
-            <th class="slds-text-align_right" scope="col" style="width:3.25rem">
-              <div class="slds-cell-fixed" style="width: 52px">
-                <span id="column-group-header" class="slds-assistive-text">Choose a row</span>
-                <div class="slds-th__action slds-align&#45;&#45;absolute-center slds-th__action_form">
-                  <div class="slds-checkbox">
-                    <input type="checkbox" name="options" id="checkbox-293" value="checkbox-293" tabindex="0"
-                           aria-labelledby="check-select-all-label column-group-header"/>
-                    <label class="slds-checkbox__label" for="checkbox-293" id="check-select-all-label">
-                      <span class="slds-checkbox_faux"></span>
-                      <span class="slds-form-element__label slds-assistive-text">Select All</span>
-                    </label>
-                  </div>
+        <table aria-multiselectable="true"
+               class="slds-table_bordered slds-max-medium-table_stacked-horizontal slds-table_fixed-layout
+             slds-table--header-fixed" ngl-datatable [data]="taskList" trackByKey="rank" [loading]="loading">
+          <ngl-datatable-column heading key headClass="table-index" cellClass="table-index">
+            <ng-template nglDatatableHeading>
+              <div class="slds-cell-fixed slds-col_padded table-index"></div>
+            </ng-template>
+            <ng-template nglDatatableCell let-index="index">
+              <div class="slds-col_padded">
+                {{index + 1}}
+              </div>
+            </ng-template>
+          </ngl-datatable-column>
+          <ngl-datatable-column heading key headClass="table-combo" cellClass="table-combo">
+            <ng-template nglDatatableHeading>
+              <div class="table-combo-header">
+                <div class="slds-cell-fixed slds-col_padded slds-align_absolute-center">
+                  <ngl-checkbox label="">
+                    <input ngl id="check-all" type="checkbox" (click)="toggleCheckAll()">
+                  </ngl-checkbox>
                 </div>
               </div>
-            </th>
-            <th aria-label="Name" aria-sort="none" class="slds-is-resizable slds-is-sortable" scope="col">
-              <div class="slds-cell-fixed">
-                <a class="slds-th__action slds-text-link_reset" href="javascript:void(0);" role="button" tabindex="0">
-                  <span class="slds-assistive-text">Sort by: </span>
-                  <div class="slds-grid slds-grid_vertical-align-center slds-has-flexi-truncate">
-                    <span class="slds-truncate" title="Name">Name</span>
-                    <span class="slds-icon_container slds-icon-utility-arrowdown">
-                    <svg class="slds-icon slds-icon-text-default slds-is-sortable__icon " aria-hidden="true">
-                      <use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#arrowdown"></use>
-                    </svg>
-                  </span>
-                  </div>
-                </a>
-                <div class="slds-resizable">
-                  <input type="range" aria-label="Name column width" class="slds-resizable__input slds-assistive-text"
-                         id="cell-resize-handle-533" max="1000" min="20" tabindex="0"/>
-                  <span class="slds-resizable__handle">
-                  <span class="slds-resizable__divider"></span>
-                 </span>
-                </div>
+            </ng-template>
+            <ng-template nglDatatableCell let-index="index" let-row="row">
+              <div class="slds-col_padded">
+                <ngl-checkbox label="" (click)="check(row)">
+                  <input ngl id="checkbox-{{index}}" class="child-checkbox" [checked]="row.checked" type="checkbox">
+                </ngl-checkbox>
               </div>
-            </th>
-            <th aria-label="Deadline" aria-sort="none" class="slds-is-resizable slds-is-sortable" scope="col">
-              <div class="slds-cell-fixed">
-                <a class="slds-th__action slds-text-link_reset" href="javascript:void(0);" role="button" tabindex="0">
-                  <span class="slds-assistive-text">Sort by: </span>
-                  <div class="slds-grid slds-grid_vertical-align-center slds-has-flexi-truncate">
-                    <span class="slds-truncate" title="Deadline">Deadline</span>
-                    <span class="slds-icon_container slds-icon-utility-arrowdown">
-                    <svg class="slds-icon slds-icon-text-default slds-is-sortable__icon " aria-hidden="true">
-                      <use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#arrowdown"></use>
-                    </svg>
-                   </span>
-                  </div>
-                </a>
-                <div class="slds-resizable">
-                  <input type="range" aria-label="Deadline column width"
-                         class="slds-resizable__input slds-assistive-text"
-                         id="cell-resize-handle-534" max="1000" min="20" tabindex="0"/>
-                  <span class="slds-resizable__handle">
-                  <span class="slds-resizable__divider"></span>
-                </span>
-                </div>
-              </div>
-            </th>
-            <th></th>
-            <th></th>
-            <th></th>
-            <th></th>
-            <th></th>
-            <th></th>
-          </tr>
-          </thead>
-          <tbody style="height:20rem;">
-          <tr aria-selected="false" class="slds-hint-parent" *ngFor="let task of taskList">
-            <td class="slds-align&#45;&#45;absolute-center" role="gridcell">
-              <div class="slds-checkbox">
-                <input type="checkbox" name="options" id="checkbox-01" value="checkbox-01" tabindex="0"
-                       aria-labelledby="check-button-label-01 column-group-header"/>
-                <label class="slds-checkbox__label" for="checkbox-01" id="check-button-label-01">
-                  <span class="slds-checkbox_faux"></span>
-                  <span class="slds-form-element__label slds-assistive-text">Select item 1</span>
-                </label>
-              </div>
-            </td>
-            <th scope="row">
-              <div class="slds-truncate" title="{{task.name}}}">
-                <a href="javascript:void(0);" tabindex="0">{{task.name}}</a>
-              </div>
-            </th>
-            <td role="gridcell">
-              <div class="slds-truncate" title="{{task.deadline}}">{{task.deadline}}</div>
-            </td>
-            <td role="gridcell">
-            </td>
-            <td role="gridcell">
-            </td>
-            <td role="gridcell">
-            </td>
-            <td role="gridcell">
-            </td>
-            <td role="gridcell">
-            </td>
-            <td role="gridcell">
-              <button class="slds-button slds-button_icon slds-button_icon-border-filled slds-button_icon-x-small"
-                      aria-haspopup="true" tabindex="0" title="More actions for Acme - 1,200 Widgets">
-                <svg class="slds-button__icon slds-button__icon_hint slds-button__icon_small" aria-hidden="true">
-                  <use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#down"></use>
-                </svg>
-                <span class="slds-assistive-text">More actions for Acme - 1,200 Widgets</span>
-              </button>
-            </td>
-          </tr>
-          </tbody>
+            </ng-template>
+          </ngl-datatable-column>
+          <ngl-datatable-column heading key="name" truncate>
+            <ng-template nglDatatableHeading>
+              <div class="slds-cell-fixed slds-col--padded slds-align_absolute-center">Name</div>
+            </ng-template>
+          </ngl-datatable-column>
+          <ngl-datatable-column heading key="deadline" truncate>
+            <ng-template nglDatatableHeading>
+              <div class="slds-cell-fixed slds-col--padded slds-align_absolute-center">Deadline</div>
+            </ng-template>
+          </ngl-datatable-column>
+          <!-- Loading overlay-->
+          <ng-template nglLoadingOverlay>
+            <div class="slds-box slds-box_small slds-theme_shade slds-text-align_center">Loading...</div>
+          </ng-template>
+          <!-- No rows overlay-->
+          <ng-template nglNoRowsOverlay>No data available in table!</ng-template>
         </table>
       </div>
-    </div>-->
+    </div>
   </div>
-  <!--<footer class="slds-card__footer">
-    <p>Page {{pageNum}} of {{totalPages}}</p>
-  </footer>-->
-  <table class="slds-table_bordered slds-max-medium-table_stacked-horizontal slds-table_fixed-layout" ngl-datatable
-         [data]="taskList" trackByKey="rank" [loading]="loading" [(sort)]="sort" (sortChange)="onSort($event)"
-         (rowClick)="onRowClick($event)">
-    <ngl-datatable-column heading="" key="">
-      <ng-template nglDatatableCell let-index="index">
-        <div class="slds-checkbox">
-          <input type="checkbox" name="options" id="checkbox-{{index}}" value="checkbox-293" tabindex="0"
-                 aria-labelledby="check-select-all-label column-group-header"/>
-          <label class="slds-checkbox__label" for="checkbox-293" id="check-select-all-label2">
-            <span class="slds-checkbox_faux"></span>
-            <span class="slds-form-element__label slds-assistive-text">Select All</span>
-          </label>
-        </div>
-      </ng-template>
-    </ngl-datatable-column>
-    <ngl-datatable-column heading="Name" key="name" truncate sortable></ngl-datatable-column>
-    <ngl-datatable-column heading="Deadline" key="deadline" truncate="true" sortable>
-      <ng-template nglDatatableCell let-row="row"><b>{{row.surname}}</b></ng-template>
-    </ngl-datatable-column>
-    <!-- Loading overlay-->
-    <ng-template nglLoadingOverlay>
-      <div class="slds-box slds-box_small slds-theme_shade slds-text-align_center">Loading...</div>
-    </ng-template>
-    <!-- No rows overlay-->
-    <ng-template nglNoRowsOverlay>No data available in table!</ng-template>
-  </table>
 </article>

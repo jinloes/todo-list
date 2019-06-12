@@ -1,4 +1,4 @@
-import {Component, OnInit} from "@angular/core";
+import {Component, OnInit, ViewEncapsulation} from "@angular/core";
 import {TaskService} from "../services/task.service";
 import {TaskDialogComponent} from "../task-dialog/task-dialog.component";
 import {MatDialog} from "@angular/material";
@@ -8,7 +8,8 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 @Component({
   selector: "app-task-list",
   templateUrl: "./task-list.component.html",
-  styleUrls: ["./task-list.component.css"]
+  styleUrls: ["./task-list.component.css"],
+  encapsulation: ViewEncapsulation.None
 })
 export class TaskListComponent implements OnInit {
   createTask: FormGroup;
@@ -17,7 +18,7 @@ export class TaskListComponent implements OnInit {
   totalPages: number;
   totalTasks: number;
   timestamp: string;
-  opened = false;
+  checkAll = false;
 
   constructor(private formBuilder: FormBuilder, private taskService: TaskService, private dialog: MatDialog) {
     this.createTask = this.formBuilder.group({
@@ -52,5 +53,14 @@ export class TaskListComponent implements OnInit {
     this.totalPages = data['page']['totalPages'];
     this.totalTasks = data['page']['totalElements'];
     this.timestamp = new Date().toISOString();
+  }
+
+  check(row) {
+    row.checked = !row.checked;
+  }
+
+  toggleCheckAll() {
+    this.checkAll = !this.checkAll;
+    this.taskList.forEach(task => task.checked = this.checkAll);
   }
 }

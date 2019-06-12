@@ -1,1 +1,12 @@
+.table-combo {
+  width: 3.25rem
+}
 
+.table-index {
+  width: 2rem
+}
+
+.table-combo-header {
+  width: 3.25rem;
+  padding: 0.25rem 0.5rem;
+}
