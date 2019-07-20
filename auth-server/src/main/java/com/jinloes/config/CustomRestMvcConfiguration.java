@@ -1,5 +1,6 @@
 package com.jinloes.config;
 
+import com.jinloes.data.service.ToDo;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.rest.core.config.RepositoryRestConfiguration;
@@ -15,10 +16,8 @@ class CustomRestMvcConfiguration {
 
             @Override
             public void configureRepositoryRestConfiguration(RepositoryRestConfiguration config) {
-                //config.setBasePath("/api");
+                config.exposeIdsFor(ToDo.class);
             }
         };
     }
-
-
 }

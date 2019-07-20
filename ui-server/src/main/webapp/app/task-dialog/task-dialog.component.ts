@@ -1,26 +1,38 @@
-import {Component, EventEmitter, OnInit, ViewEncapsulation} from '@angular/core';
-import {MatDialogRef} from "@angular/material";
-import {FormBuilder, FormGroup, ValidationErrors, Validators} from "@angular/forms";
+import {Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation} from '@angular/core';
+import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {TaskService} from "../services/task.service";
+import {Task} from '../task';
 
 @Component({
-  selector: 'app-task-dialog',
+  selector: 'task-dialog',
   templateUrl: './task-dialog.component.html',
   styleUrls: ['./task-dialog.component.css'],
   encapsulation: ViewEncapsulation.None
 })
 export class TaskDialogComponent implements OnInit {
+  @Input()
+  open: boolean = false;
+  @Input()
+  id: string;
+  @Input()
+  name: string;
+  @Input()
+  deadline: Date;
+  @Input()
+  notes: string;
+  @Input()
+  action: string;
+  @Input()
+  dialogHeader = 'Title';
+  @Output()
+  onTaskEvent = new EventEmitter();
+  @Output()
+  onDialogClosed = new EventEmitter();
   createTask: FormGroup;
   showToday = true;
-  onAdd: EventEmitter<any> = new EventEmitter();
-  opened = false;
-  directional = false;
-  dismissOnClickOutside = false;
-  readonlyInput = true;
   format = 'middle-endian';
 
-  constructor(private formBuilder: FormBuilder, private dialogRef: MatDialogRef<TaskDialogComponent>,
-              private taskService: TaskService) {
+  constructor(private formBuilder: FormBuilder, private taskService: TaskService) {
   }
 
   ngOnInit() {
@@ -29,14 +41,12 @@ export class TaskDialogComponent implements OnInit {
       deadline: [''],
       notes: ['', Validators.maxLength(4000)]
     });
-    this.dialogRef.afterOpened()
-      .subscribe(data => {
-        this.opened = true;
-      })
   }
 
   closeDialog() {
-    this.dialogRef.close();
+    this.onDialogClosed.emit();
+    this.onTaskEvent.emit({"type": "dialog-closed"});
+    this.open = false;
   }
 
   get f() {
@@ -55,10 +65,43 @@ export class TaskDialogComponent implements OnInit {
       });
       return;
     }
-    this.taskService.create(this.createTask.value)
+    let task: Task = Task.fromJson(this.createTask.value);
+    switch (this.action) {
+      case 'edit':
+        this.taskService.update(this.id, task)
+          .subscribe(data => {
+            //this.templateTask.copy(task);
+            console.log("Updated task: " + data);
+            this.onSuccessChange();
+            this.closeDialog();
+          }, err => {
+            console.log("Http error", err);
+            this.closeDialog();
+          });
+        break;
+      case 'clone':
+        Object.keys(this.f).forEach(field => {
+          const control = this.createTask.get(field);
+          control.markAsTouched({onlySelf: true});
+        });
+        let clone = Task.of(this.name, this.deadline, this.notes);
+        this.create(clone);
+        break;
+      default:
+        this.create(task);
+        this.createTask.reset();
+    }
+  }
+
+  cancel() {
+    this.closeDialog();
+  }
+
+  private create(task: Task) {
+    this.taskService.create(task)
       .subscribe(data => {
         console.log("Created task: " + data);
-        this.onAdd.emit();
+        this.onSuccessChange();
         this.closeDialog();
       }, err => {
         console.log("Http error", err);
@@ -66,7 +109,12 @@ export class TaskDialogComponent implements OnInit {
       });
   }
 
-  cancel() {
-    this.opened = false;
+  private onSuccessChange() {
+    this.createTask.reset();
+    this.onTaskEvent.emit({"type": "create", "status": "success"});
+  }
+
+  handleOpenChange(event) {
+    this.cancel();
   }
 }

@@ -15,6 +15,10 @@ import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {TaskHttpInterceptor} from "./task-http-interceptor.service";
 import {TimeAgoPipe} from "time-ago-pipe";
 import {NglModule} from "ng-lightning";
+import {TaskDetailComponent} from './task-detail/task-detail.component';
+import { MountainImgComponent } from './mountain-img/mountain-img.component';
+import { CreateTaskComponent } from './create-task/create-task.component';
+import { CloneTaskComponent } from './clone-task/clone-task.component';
 
 @NgModule({
   declarations: [
@@ -25,6 +29,10 @@ import {NglModule} from "ng-lightning";
     AlertComponent,
     TaskDialogComponent,
     TimeAgoPipe,
+    TaskDetailComponent,
+    MountainImgComponent,
+    CreateTaskComponent,
+    CloneTaskComponent,
   ],
   imports: [
     BrowserModule,

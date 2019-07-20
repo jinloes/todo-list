@@ -1,101 +1,108 @@
-<article style="height:100%;" class="slds-card">
-  <div class="slds-card__header slds-grid">
-    <header class="slds-media slds-media_center slds-has-flexi-truncate">
-      <div class="slds-media__figure">
-          <span class="slds-icon_container slds-icon-standard-task" title="task">
-            <svg class="slds-icon slds-page-header__icon" aria-hidden="true">
-              <use xmlns:xlink="http://www.w3.org/1999/xlink"
-                   xlink:href="/assets/icons/standard-sprite/svg/symbols.svg#task"/>
-            </svg>
-            <span class="slds-assistive-text">task</span>
-          </span>
-      </div>
-      <div class="slds-media__body">
-        <h2 class="slds-card__header-title">
-          <span class="slds-card__header-link slds-truncate" title="Tasks">Tasks</span>
-        </h2>
-      </div>
-      <div class="slds-page-header__col-actions">
-        <div class="slds-page-header__controls">
-          <div class="slds-page-header__control">
-            <ul class="slds-button-group-list">
-              <li>
-                <button class="slds-button slds-button_neutral" (click)="openNew()">New</button>
-              </li>
-              <li>
-                <div class="slds-dropdown-trigger slds-dropdown-trigger_click">
-                  <button class="slds-button slds-button_icon slds-button_icon-border-filled" aria-haspopup="true"
-                          title="More Actions">
-                    <svg class="slds-button__icon" aria-hidden="true">
-                      <use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#down"></use>
+<div class="slds-grid">
+  <div class="slds-col slds-col_padded slds-size_1-of-3">
+    <div class="slds-split-view_container slds-is-open">
+      <article aria-hidden="false" id="split-view-id" class="slds-split-view slds-grid slds-grid_vertical slds-grow">
+        <header class="slds-split-view__header">
+          <div class="slds-grid slds-grid_vertical-align-center slds-m-bottom_xx-small">
+            <div class="slds-has-flexi-truncate">
+              <div class="slds-media slds-media_center">
+                <div class="slds-media__figure">
+                  <div class="slds-icon_container slds-icon-standard-lead">
+                    <svg class="slds-icon" aria-hidden="true">
+                      <use xlink:href="/assets/icons/standard-sprite/svg/symbols.svg#lead"></use>
                     </svg>
-                    <span class="slds-assistive-text">More Actions</span>
-                  </button>
+                    <span class="slds-assistive-text">Leads</span>
+                  </div>
                 </div>
+                <div class="slds-media__body">
+                  <h1 class="slds-text-heading_small slds-text-color_default slds-p-right_x-small">
+                    <button class="slds-button slds-button_reset slds-type-focus slds-truncate" aria-haspopup="true"
+                            title="">
+                        <span class="slds-grid slds-has-flexi-truncate slds-grid_vertical-align-center">
+                        <span class="slds-truncate" title="My Leads">Tasks</span>
+                        <svg class="slds-button__icon slds-button__icon_right slds-no-flex" aria-hidden="true">
+                        <use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#down"></use>
+                        </svg>
+                        </span>
+                    </button>
+                  </h1>
+                </div>
+              </div>
+            </div>
+            <div class="slds-no-flex slds-grid">
+              <button type="button" nglButton variant="neutral" (click)="openTaskDialog()">
+                New
+              </button>
+            </div>
+          </div>
+          <div class="slds-grid slds-grid_vertical-align-center">
+            <p class="slds-text-body_small slds-text-color_weak">
+              {{totalTasks}} items • Updated {{timestamp | timeAgo}}</p>
+            <div class="slds-no-flex slds-grid slds-col_bump-left">
+              <div class="slds-button-group">
+                <button class="slds-button slds-button_icon slds-button_icon slds-button_icon-container-more"
+                        aria-haspopup="true" title="Display As Split View">
+                  <svg class="slds-button__icon" aria-hidden="true">
+                    <use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#side_list"></use>
+                  </svg>
+                  <svg class="slds-button__icon slds-button__icon_x-small" aria-hidden="true">
+                    <use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#down"></use>
+                  </svg>
+                  <span class="slds-assistive-text">Display As Split View</span>
+                </button>
+              </div>
+              <div class="slds-button-group">
+                <button class="slds-button slds-button_icon slds-button_icon slds-button_icon-container"
+                        title="Refresh List">
+                  <svg class="slds-button__icon" aria-hidden="true">
+                    <use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#refresh"></use>
+                  </svg>
+                  <span class="slds-assistive-text">Refresh List</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </header>
+        <div class="slds-grid slds-grid_vertical">
+          <div class="slds-split-view__list-header slds-grid">
+            <span class="slds-assistive-text">Sorted by:</span>
+            <span>Lead Score
+                <svg class="slds-icon slds-icon_xx-small slds-icon-text-default slds-align-top" aria-hidden="true">
+                <use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#arrowdown"></use>
+                </svg>
+              </span>
+            <span class="slds-assistive-text">- Descending</span>
+          </div>
+          <div style="height:55vw;overflow: auto">
+            <ul aria-multiselectable="true" class="slds-scrollable_y" role="listbox" aria-label="View your tasks."
+                *ngFor="let task of taskList">
+              <li class="slds-split-view__list-item" role="presentation">
+                <a (click)="setSelected(task)" aria-selected="false" role="option"
+                   class="slds-split-view__list-item-action slds-grow slds-has-flexi-truncate" tabindex="0">
+                  <div class="slds-grid slds-wrap">
+                <span class="slds-truncate slds-text-body_regular slds-text-color_default" title="{{task.getName()}}">
+                  {{task.getName()}}
+                </span>
+                    <!--<span class="slds-truncate slds-col_bump-left" title="99">99</span>-->
+                  </div>
+                  <div class="slds-grid slds-wrap">
+                      <span class="slds-truncate" title="Deadline">
+                        Deadline: {{(task.getDeadline() | date: 'MM/dd/yyyy') || 'None'}}
+                      </span>
+                    <!--<span class="slds-truncate slds-col_bump-left" title="Nurturing">Nurturing</span>-->
+                  </div>
+                </a>
               </li>
             </ul>
           </div>
         </div>
-      </div>
-    </header>
-  </div>
-  <div class="slds-card__body slds-card__body_inner">
-    <div class="slds-page-header__col-meta">
-      <p class="slds-page-header__meta-text">{{totalTasks}} items • Updated {{timestamp | timeAgo}}</p>
+      </article>
     </div>
   </div>
-  <div class="slds-card__body">
-    <div class="slds-table_header-fixed_container" style="height:50vw;">
-      <div class="slds-scrollable_y" style="height:100%;">
-        <table aria-multiselectable="true"
-               class="slds-table_bordered slds-max-medium-table_stacked-horizontal slds-table_fixed-layout
-             slds-table--header-fixed" ngl-datatable [data]="taskList" trackByKey="rank" [loading]="loading">
-          <ngl-datatable-column heading key headClass="table-index" cellClass="table-index">
-            <ng-template nglDatatableHeading>
-              <div class="slds-cell-fixed slds-col_padded table-index"></div>
-            </ng-template>
-            <ng-template nglDatatableCell let-index="index">
-              <div class="slds-col_padded">
-                {{index + 1}}
-              </div>
-            </ng-template>
-          </ngl-datatable-column>
-          <ngl-datatable-column heading key headClass="table-combo" cellClass="table-combo">
-            <ng-template nglDatatableHeading>
-              <div class="table-combo-header">
-                <div class="slds-cell-fixed slds-col_padded slds-align_absolute-center">
-                  <ngl-checkbox label="">
-                    <input ngl id="check-all" type="checkbox" (click)="toggleCheckAll()">
-                  </ngl-checkbox>
-                </div>
-              </div>
-            </ng-template>
-            <ng-template nglDatatableCell let-index="index" let-row="row">
-              <div class="slds-col_padded">
-                <ngl-checkbox label="" (click)="check(row)">
-                  <input ngl id="checkbox-{{index}}" class="child-checkbox" [checked]="row.checked" type="checkbox">
-                </ngl-checkbox>
-              </div>
-            </ng-template>
-          </ngl-datatable-column>
-          <ngl-datatable-column heading key="name" truncate>
-            <ng-template nglDatatableHeading>
-              <div class="slds-cell-fixed slds-col--padded slds-align_absolute-center">Name</div>
-            </ng-template>
-          </ngl-datatable-column>
-          <ngl-datatable-column heading key="deadline" truncate>
-            <ng-template nglDatatableHeading>
-              <div class="slds-cell-fixed slds-col--padded slds-align_absolute-center">Deadline</div>
-            </ng-template>
-          </ngl-datatable-column>
-          <!-- Loading overlay-->
-          <ng-template nglLoadingOverlay>
-            <div class="slds-box slds-box_small slds-theme_shade slds-text-align_center">Loading...</div>
-          </ng-template>
-          <!-- No rows overlay-->
-          <ng-template nglNoRowsOverlay>No data available in table!</ng-template>
-        </table>
-      </div>
-    </div>
+  <div class="slds-col slds-size_2-of-3">
+    <task-detail [taskSelect]="onTaskSelect" (tasksModified)="handleTasksModified()">
+    </task-detail>
   </div>
-</article>
+  <create-task [(open)]="taskDialogOpened" (onCreate)="reloadData()" (onClosed)="handleClosed()">
+  </create-task>
+</div>

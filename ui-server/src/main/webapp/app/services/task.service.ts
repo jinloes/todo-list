@@ -1,8 +1,9 @@
 import {Injectable} from '@angular/core';
-import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
+import {HttpClient, HttpParams} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {Task} from '../task';
 import {AuthenticationService} from "./authentication.service";
+import {map} from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -19,7 +20,17 @@ export class TaskService {
     return this.http.get(`${this.baseUrl}`, {params: params});
   }
 
-  create(task: Task): Observable<any> {
-    return this.http.post(`${this.baseUrl}`, task);
+  create(task: Task): Observable<Task> {
+    return this.http.post(`${this.baseUrl}`, task)
+      .pipe(map(json => Task.fromJson(<JSON>json)));
+  }
+
+  getTask(taskId: string): Observable<Task> {
+    return this.http.get(`${this.baseUrl}/${taskId}`)
+      .pipe(map(json => Task.fromJson(<JSON>json)));
+  }
+
+  update(taskId: string, task: Task) {
+    return this.http.put(`${this.baseUrl}/${taskId}`, task);
   }
 }

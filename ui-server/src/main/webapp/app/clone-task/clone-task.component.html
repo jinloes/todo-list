@@ -1,25 +1,29 @@
-<ngl-modal [header]="dialogHeader" [(open)]="open" [directional]="false"
-           [dismissOnClickOutside]="dismissOnClickOutside" (openChange)="handleOpenChange($event)">
+<ngl-modal [header]="'Clone Task'" [(open)]="open" [directional]="false" [dismissOnClickOutside]="false"
+           (openChange)="cancel()">
   <div class="slds-modal__content slds-p-around_medium">
     <div class="slds-form" role="list">
-      <form class="slds-modal--form" [formGroup]="createTask" (ngSubmit)="onSubmit()">
+      <form class="slds-modal--form" [formGroup]="cloneTask" (ngSubmit)="onSubmit()">
         <div class="slds-form__row">
           <div class="slds-form__item" role="listitem">
             <div class="slds-form-element slds-form-element_stacked">
-              <ngl-input label="Name" fieldLevelHelpTooltip="Task name"
-                         [error]="isNameInvalid ? 'Required, less than 32 chars' : null">
-                <input ngl type="input" formControlName="name" [required]="true" [disabled]="false" maxlength="32"
-                       [ngModel]="(templateTask?.getName()) || ''">
+              <ngl-input label="Name" [fieldLevelHelpTooltip]="'Task name'" [error]="getNameErrorMessage()">
+                <input ngl type="input" formControlName="name" [required]="true" [disabled]="false" maxlength="32">
               </ngl-input>
             </div>
           </div>
           <div class="slds-form__item" role="listitem">
             <div class="slds-form-element slds-form-element_stacked">
               <div class="slds-form-element__control">
-                <ngl-datepicker-input label="Deadline" formControlName="deadline" [class.slds-has-error]="!true"
-                                      [showToday]="showToday" [format]="format"
-                                      [ngModel]="(templateTask?.getDeadline() | date: 'MM/dd/yyyy') || ''">
+                <ngl-datepicker-input label="Deadline" formControlName="deadline"
+                                      [value]="f.deadline.value"
+                                      [class.slds-has-error]="!f.deadline.valid"
+                                      [showToday]="showToday" [format]="'middle-endian'">
                 </ngl-datepicker-input>
+                <p class="slds-m-top_xx-small">
+                  <span class="slds-text-color_error" *ngIf="!f.deadline.valid">
+                     <ng-container>{{getDeadlineErrorMessage()}}</ng-container>
+                  </span>
+                </p>
 
               </div>
             </div>
@@ -28,10 +32,9 @@
         <div class="slds-form__row">
           <div class="slds-form__item" role="listitem">
             <div class="slds-form-element slds-form-element_stacked slds-form-element_1-col">
-              <ngl-textarea label="Notes" fieldLevelHelpTooltip="Some helpful information"
+              <ngl-textarea label="Notes" [fieldLevelHelpTooltip]="'Some helpful information'"
                             [error]="false ? '' : null">
-            <textarea ngl [required]="false" [disabled]="false" formControlName="notes"
-                      value="{{(templateTask?.getNotes()) || ''}}">
+            <textarea ngl [required]="false" [disabled]="false" formControlName="notes">
             </textarea>
               </ngl-textarea>
             </div>

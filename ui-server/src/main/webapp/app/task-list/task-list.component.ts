@@ -1,9 +1,8 @@
-import {Component, OnInit, ViewEncapsulation} from "@angular/core";
+import {Component, EventEmitter, OnInit, ViewEncapsulation} from "@angular/core";
 import {TaskService} from "../services/task.service";
-import {TaskDialogComponent} from "../task-dialog/task-dialog.component";
-import {MatDialog} from "@angular/material";
 import {Task} from '../task';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {Location} from '@angular/common';
 
 @Component({
   selector: "app-task-list",
@@ -18,14 +17,16 @@ export class TaskListComponent implements OnInit {
   totalPages: number;
   totalTasks: number;
   timestamp: string;
-  checkAll = false;
+  taskDialogOpened = false;
+  onTaskSelect = new EventEmitter<string>();
 
-  constructor(private formBuilder: FormBuilder, private taskService: TaskService, private dialog: MatDialog) {
+  constructor(private formBuilder: FormBuilder, private taskService: TaskService, private location: Location) {
     this.createTask = this.formBuilder.group({
       name: ['', Validators.required],
       deadline: [''],
       notes: ['', Validators.maxLength(4000)]
     });
+
   }
 
   ngOnInit() {
@@ -40,27 +41,28 @@ export class TaskListComponent implements OnInit {
       });
   }
 
-  openNew() {
-    let dialogRef = this.dialog.open(TaskDialogComponent);
-    const sub = dialogRef.componentInstance.onAdd.subscribe(() => {
-      this.reloadData();
-    });
+  openTaskDialog() {
+    this.taskDialogOpened = !this.taskDialogOpened;
   }
 
   extractData(data) {
-    this.taskList = data['_embedded']['todos'];
+    this.taskList = (<JSON[]>data['_embedded']['todos']).map(json => Task.fromJson(json));
     this.pageNum = data['page']['number'] + 1;
     this.totalPages = data['page']['totalPages'];
     this.totalTasks = data['page']['totalElements'];
     this.timestamp = new Date().toISOString();
   }
 
-  check(row) {
-    row.checked = !row.checked;
+  setSelected(task: Task) {
+    this.location.replaceState("/tasks/" + task.getId());
+    this.onTaskSelect.emit(task.getId())
   }
 
-  toggleCheckAll() {
-    this.checkAll = !this.checkAll;
-    this.taskList.forEach(task => task.checked = this.checkAll);
+  handleClosed() {
+    this.taskDialogOpened = false;
+  }
+
+  handleTasksModified() {
+    this.reloadData()
   }
 }

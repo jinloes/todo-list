@@ -1,5 +1,5 @@
-<ngl-modal [header]="dialogHeader" [(open)]="open" [directional]="false"
-           [dismissOnClickOutside]="dismissOnClickOutside" (openChange)="handleOpenChange($event)">
+<ngl-modal [header]="'Create Task'" [(open)]="open" [directional]="false"
+           [dismissOnClickOutside]="false" (openChange)="cancel()">
   <div class="slds-modal__content slds-p-around_medium">
     <div class="slds-form" role="list">
       <form class="slds-modal--form" [formGroup]="createTask" (ngSubmit)="onSubmit()">
@@ -9,7 +9,7 @@
               <ngl-input label="Name" fieldLevelHelpTooltip="Task name"
                          [error]="isNameInvalid ? 'Required, less than 32 chars' : null">
                 <input ngl type="input" formControlName="name" [required]="true" [disabled]="false" maxlength="32"
-                       [ngModel]="(templateTask?.getName()) || ''">
+                       [ngModel]="''">
               </ngl-input>
             </div>
           </div>
@@ -17,8 +17,7 @@
             <div class="slds-form-element slds-form-element_stacked">
               <div class="slds-form-element__control">
                 <ngl-datepicker-input label="Deadline" formControlName="deadline" [class.slds-has-error]="!true"
-                                      [showToday]="showToday" [format]="format"
-                                      [ngModel]="(templateTask?.getDeadline() | date: 'MM/dd/yyyy') || ''">
+                                      [showToday]="true" [format]="'middle-endian'" [ngModel]="''">
                 </ngl-datepicker-input>
 
               </div>
@@ -30,8 +29,7 @@
             <div class="slds-form-element slds-form-element_stacked slds-form-element_1-col">
               <ngl-textarea label="Notes" fieldLevelHelpTooltip="Some helpful information"
                             [error]="false ? '' : null">
-            <textarea ngl [required]="false" [disabled]="false" formControlName="notes"
-                      value="{{(templateTask?.getNotes()) || ''}}">
+            <textarea ngl [required]="false" [disabled]="false" formControlName="notes" value="''">
             </textarea>
               </ngl-textarea>
             </div>
