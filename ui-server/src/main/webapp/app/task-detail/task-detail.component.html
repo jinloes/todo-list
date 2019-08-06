@@ -19,7 +19,7 @@
                 <button type="button" nglButton variant="neutral" (click)="openEdit()">Edit</button>
               </li>
               <li>
-                <button type="button" nglButton variant="neutral">Delete</button>
+                <button type="button" nglButton variant="neutral" (click)="openDelete()">Delete</button>
               </li>
               <li>
                 <button type="button" nglButton variant="neutral" (click)="openClone()">Clone</button>
@@ -87,4 +87,8 @@
   <clone-task [task]="task" [(open)]="cloneOpen" (onClosed)="handleDialogClosed($event)"
               (onCreate)="handleCreated($event)">
   </clone-task>
+  <delete-task [taskId]="task?.getId()" [(open)]="deleteOpen" (onCancel)="handleDeleteCancel($event)"
+               (onDelete)="handleDelete($event)"></delete-task>
+  <edit-task [task]="task" [(open)]="editOpen" (onClosed)="handleEditCancel($event)"
+             (onEdit)="handleEdit($event)"></edit-task>
 </article>

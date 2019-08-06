@@ -33,6 +33,11 @@ export class TaskListComponent implements OnInit {
     this.reloadData();
   }
 
+  handleCreated(task: Task) {
+    this.setSelected(task);
+    this.reloadData();
+  }
+
   reloadData() {
     this.taskService.getTasks()
       .subscribe(resp => {

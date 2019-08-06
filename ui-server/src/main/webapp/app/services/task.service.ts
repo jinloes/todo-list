@@ -22,15 +22,20 @@ export class TaskService {
 
   create(task: Task): Observable<Task> {
     return this.http.post(`${this.baseUrl}`, task)
-      .pipe(map(json => Task.fromJson(<JSON>json)));
+      .pipe(map(json => Task.fromJson(<JSON> json)));
   }
 
   getTask(taskId: string): Observable<Task> {
     return this.http.get(`${this.baseUrl}/${taskId}`)
-      .pipe(map(json => Task.fromJson(<JSON>json)));
+      .pipe(map(json => Task.fromJson(<JSON> json)));
   }
 
   update(taskId: string, task: Task) {
-    return this.http.put(`${this.baseUrl}/${taskId}`, task);
+    return this.http.put(`${this.baseUrl}/${taskId}`, task)
+      .pipe(map(json => Task.fromJson(<JSON> json)));
+  }
+
+  delete(taskId: string) {
+    return this.http.delete(`${this.baseUrl}/${taskId}`);
   }
 }

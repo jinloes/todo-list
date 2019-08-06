@@ -7,3 +7,8 @@
 **/out
 **/build
 **/.DS_Store
+**/.settings
+.vscode
+**/.project
+**/.classpath
+**/bin

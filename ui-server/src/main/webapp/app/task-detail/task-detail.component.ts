@@ -15,6 +15,8 @@ export class TaskDetailComponent implements OnInit {
   @Output()
   tasksModified = new EventEmitter();
   cloneOpen = false;
+  deleteOpen = false;
+  editOpen = false;
   task: Task;
 
 
@@ -22,6 +24,7 @@ export class TaskDetailComponent implements OnInit {
     this.route.paramMap.subscribe(params => {
       let taskId = params.get('id');
       if (!taskId) {
+        console.log("Task id is null not fetching task");
         return;
       }
       this.loadTask(taskId);
@@ -39,7 +42,12 @@ export class TaskDetailComponent implements OnInit {
       .subscribe(task => {
         console.log(task);
         this.task = task;
-      })
+      }, error => {
+        console.log(error);
+        if (error.httpStatus === 404) {
+          this.location.go("/tasks")
+        }
+      });
   }
 
   ngOnDestroy() {
@@ -50,6 +58,14 @@ export class TaskDetailComponent implements OnInit {
     this.cloneOpen = !this.cloneOpen;
   }
 
+  openDelete() {
+    this.deleteOpen = !this.deleteOpen;
+  }
+
+  openEdit() {
+    this.editOpen = !this.editOpen;
+  }
+
   handleDialogClosed(event) {
     this.cloneOpen = false;
   }
@@ -58,5 +74,24 @@ export class TaskDetailComponent implements OnInit {
     this.location.replaceState("/tasks/" + task.getId());
     this.tasksModified.emit();
     this.loadTask(task.getId());
+  }
+
+  handleDelete(event: any) {
+    this.task = null;
+    this.tasksModified.emit();
+    this.location.go("/tasks");
+    this.deleteOpen = false;
+  }
+
+  handleDeleteCancel(event: any) {
+    this.deleteOpen = false;
+  }
+
+  handleEditCancel(event: any) {
+    this.editOpen = false;
+  }
+
+  handleEdit(task: Task) {
+    this.handleCreated(task);
   }
 }

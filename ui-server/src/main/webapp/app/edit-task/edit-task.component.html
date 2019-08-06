@@ -1,0 +1,50 @@
+<ngl-modal [header]="'Edit Task'" [(open)]="open" [directional]="false" [dismissOnClickOutside]="false"
+           (openChange)="cancel()">
+  <div class="slds-modal__content slds-p-around_medium">
+    <div class="slds-form" role="list">
+      <form class="slds-modal--form" [formGroup]="editTask" (ngSubmit)="onSubmit()">
+        <div class="slds-form__row">
+          <div class="slds-form__item" role="listitem">
+            <div class="slds-form-element slds-form-element_stacked">
+              <ngl-input label="Name" [fieldLevelHelpTooltip]="'Task name'" [error]="getNameErrorMessage()">
+                <input ngl type="input" formControlName="name" [required]="true" [disabled]="false" maxlength="32">
+              </ngl-input>
+            </div>
+          </div>
+          <div class="slds-form__item" role="listitem">
+            <div class="slds-form-element slds-form-element_stacked">
+              <div class="slds-form-element__control">
+                <ngl-datepicker-input label="Deadline" formControlName="deadline"
+                                      [value]="f.deadline.value"
+                                      [class.slds-has-error]="!f.deadline.valid"
+                                      [showToday]="showToday" [format]="'middle-endian'">
+                </ngl-datepicker-input>
+                <p class="slds-m-top_xx-small">
+                  <span class="slds-text-color_error" *ngIf="!f.deadline.valid">
+                     <ng-container>{{getDeadlineErrorMessage()}}</ng-container>
+                  </span>
+                </p>
+
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="slds-form__row">
+          <div class="slds-form__item" role="listitem">
+            <div class="slds-form-element slds-form-element_stacked slds-form-element_1-col">
+              <ngl-textarea label="Notes" [fieldLevelHelpTooltip]="'Some helpful information'"
+                            [error]="false ? '' : null">
+            <textarea ngl [required]="false" [disabled]="false" formControlName="notes">
+            </textarea>
+              </ngl-textarea>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+  <ng-template nglModalFooter>
+    <button class="slds-button slds-button_neutral" (click)="cancel()">Cancel</button>
+    <button class="slds-button slds-button_brand" (click)="onSubmit()">Save</button>
+  </ng-template>
+</ngl-modal>

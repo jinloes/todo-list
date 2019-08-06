@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation} from '@angular/core';
-import {AbstractControl, FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {Task} from "../task";
 import {TaskService} from "../services/task.service";
 
@@ -56,11 +56,9 @@ export class CreateTaskComponent implements OnInit {
         console.log("Created task: " + data);
         this.createTask.reset();
         this.onCreate.emit(data);
-        //this.onSuccessChange();
         this.closeDialog();
       }, err => {
         console.log("Http error", err);
-        //this.closeDialog();
       });
   }
 

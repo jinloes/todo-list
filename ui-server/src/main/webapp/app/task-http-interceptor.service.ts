@@ -27,9 +27,20 @@ export class TaskHttpInterceptor implements HttpInterceptor {
         this.authService.logout();
         this.router.navigate(['/login']);
       }
-      const error = err.error.error || err.statusText;
+      let error = {
+        message: this.getErrorMessage(err),
+        httpStatus: err.status
+      };
       return throwError(error);
     }));
+  }
+
+  private getErrorMessage(err) {
+    let message: String = null;
+    if (err.error) {
+      message = err.error.error
+    }
+    return message ? message : err.statusText;
   }
 
   private getToken() {

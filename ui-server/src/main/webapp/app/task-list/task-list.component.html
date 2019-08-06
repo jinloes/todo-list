@@ -103,6 +103,6 @@
     <task-detail [taskSelect]="onTaskSelect" (tasksModified)="handleTasksModified()">
     </task-detail>
   </div>
-  <create-task [(open)]="taskDialogOpened" (onCreate)="reloadData()" (onClosed)="handleClosed()">
+  <create-task [(open)]="taskDialogOpened" (onCreate)="handleCreated($event)" (onClosed)="handleClosed()">
   </create-task>
 </div>

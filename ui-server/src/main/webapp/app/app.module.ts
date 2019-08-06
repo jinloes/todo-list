@@ -19,6 +19,8 @@ import {TaskDetailComponent} from './task-detail/task-detail.component';
 import { MountainImgComponent } from './mountain-img/mountain-img.component';
 import { CreateTaskComponent } from './create-task/create-task.component';
 import { CloneTaskComponent } from './clone-task/clone-task.component';
+import { DeleteTaskComponent } from './delete-task/delete-task.component';
+import { EditTaskComponent } from './edit-task/edit-task.component';
 
 @NgModule({
   declarations: [
@@ -33,6 +35,8 @@ import { CloneTaskComponent } from './clone-task/clone-task.component';
     MountainImgComponent,
     CreateTaskComponent,
     CloneTaskComponent,
+    DeleteTaskComponent,
+    EditTaskComponent,
   ],
   imports: [
     BrowserModule,

@@ -75,6 +75,11 @@ export class CloneTaskComponent implements OnInit {
   }
 
   private setForm() {
+    if (!this.template) {
+      console.log("No task to set.");
+      // No task selected return
+      return;
+    }
     this.f.name.setValue(("Copy of " + this.template.getName())
       .substr(0, 32));
     this.f.name.markAsTouched();

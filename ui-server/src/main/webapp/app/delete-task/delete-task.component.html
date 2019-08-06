@@ -1,0 +1,9 @@
+<ngl-modal [header]="'Delete Task'" [(open)]="open" [directional]="false" (openChange)="cancel()">
+  <div class="slds-p-around_medium">
+    <p>Are you sure you want to delete this task?</p>
+  </div>
+  <ng-template nglModalFooter>
+    <button class="slds-button slds-button_brand" (click)="delete()">Ok</button>
+    <button class="slds-button slds-button_neutral" (click)="cancel()">Cancel</button>
+  </ng-template>
+</ngl-modal>
