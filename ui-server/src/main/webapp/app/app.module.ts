@@ -9,18 +9,17 @@ import {ReactiveFormsModule} from "@angular/forms";
 import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import {HomeComponent} from './home/home.component';
 import {AlertComponent} from './alert/alert.component';
-import {TaskDialogComponent} from './task-dialog/task-dialog.component';
 import {MatDialogModule} from "@angular/material";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {TaskHttpInterceptor} from "./task-http-interceptor.service";
 import {TimeAgoPipe} from "time-ago-pipe";
 import {NglModule} from "ng-lightning";
 import {TaskDetailComponent} from './task-detail/task-detail.component';
-import { MountainImgComponent } from './mountain-img/mountain-img.component';
-import { CreateTaskComponent } from './create-task/create-task.component';
-import { CloneTaskComponent } from './clone-task/clone-task.component';
-import { DeleteTaskComponent } from './delete-task/delete-task.component';
-import { EditTaskComponent } from './edit-task/edit-task.component';
+import {MountainImgComponent} from './mountain-img/mountain-img.component';
+import {CreateTaskComponent} from './create-task/create-task.component';
+import {CloneTaskComponent} from './clone-task/clone-task.component';
+import {DeleteTaskComponent} from './delete-task/delete-task.component';
+import {EditTaskComponent} from './edit-task/edit-task.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +28,6 @@ import { EditTaskComponent } from './edit-task/edit-task.component';
     LoginComponent,
     HomeComponent,
     AlertComponent,
-    TaskDialogComponent,
     TimeAgoPipe,
     TaskDetailComponent,
     MountainImgComponent,
@@ -55,9 +53,7 @@ import { EditTaskComponent } from './edit-task/edit-task.component';
     }
   ],
   bootstrap: [AppComponent],
-  entryComponents: [
-    TaskDialogComponent
-  ]
+  entryComponents: []
 })
 export class AppModule {
 }
